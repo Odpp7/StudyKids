@@ -1,0 +1,316 @@
+<div class="header">
+  <div class="header-title">
+    <h2>Reportes y Estadísticas</h2>
+    <p>Análisis detallado del desempeño del estudio</p>
+  </div>
+  <div class="header-actions">
+    <select class="filter-select" id="report-period">
+      <option value="current">Mes Actual</option>
+      <option value="last">Mes Anterior</option>
+      <option value="trimester">Trimestre</option>
+      <option value="year">Año Completo</option>
+    </select>
+    <button class="btn-primary" id="btn-export-report">
+      <span>📥</span>
+      <span>Exportar PDF</span>
+    </button>
+  </div>
+</div>
+
+<div class="content-area">
+  <!-- Overview Cards -->
+  <div class="overview-grid">
+    <div class="overview-card revenue">
+      <div class="overview-header">
+        <div class="overview-icon">💰</div>
+        <div class="overview-trend positive">
+          <span>↑ 15%</span>
+        </div>
+      </div>
+      <div class="overview-value">$2,450</div>
+      <div class="overview-label">Ingresos Totales</div>
+      <div class="overview-subtitle">vs. $2,130 mes anterior</div>
+    </div>
+
+    <div class="overview-card students">
+      <div class="overview-header">
+        <div class="overview-icon">👥</div>
+        <div class="overview-trend positive">
+          <span>↑ 8%</span>
+        </div>
+      </div>
+      <div class="overview-value">48</div>
+      <div class="overview-label">Estudiantes Activos</div>
+      <div class="overview-subtitle">+4 nuevos este mes</div>
+    </div>
+
+    <div class="overview-card attendance">
+      <div class="overview-header">
+        <div class="overview-icon">✅</div>
+        <div class="overview-trend neutral">
+          <span>→ 0%</span>
+        </div>
+      </div>
+      <div class="overview-value">93.7%</div>
+      <div class="overview-label">Tasa de Pago</div>
+      <div class="overview-subtitle">45 de 48 al día</div>
+    </div>
+
+    <div class="overview-card average">
+      <div class="overview-header">
+        <div class="overview-icon">📈</div>
+        <div class="overview-trend positive">
+          <span>↑ 5%</span>
+        </div>
+      </div>
+      <div class="overview-value">$51.04</div>
+      <div class="overview-label">Pago Promedio</div>
+      <div class="overview-subtitle">por estudiante</div>
+    </div>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="charts-section">
+    <div class="chart-container large">
+      <div class="chart-header">
+        <h3>📊 Ingresos Mensuales</h3>
+        <div class="chart-legend">
+          <div class="legend-item">
+            <span class="legend-color" style="background: #667eea;"></span>
+            <span>Ingresos</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color" style="background: #f5576c;"></span>
+            <span>Esperado</span>
+          </div>
+        </div>
+      </div>
+      <div class="chart-content">
+        <div class="bar-chart">
+          <div class="bar-group">
+            <div class="bar-label">Ene</div>
+            <div class="bar-wrapper">
+              <div class="bar bar-received" style="height: 85%;" data-value="$2,040"></div>
+              <div class="bar bar-expected" style="height: 100%;" data-value="$2,400"></div>
+            </div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label">Feb</div>
+            <div class="bar-wrapper">
+              <div class="bar bar-received" style="height: 78%;" data-value="$1,872"></div>
+              <div class="bar bar-expected" style="height: 100%;" data-value="$2,400"></div>
+            </div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label">Mar</div>
+            <div class="bar-wrapper">
+              <div class="bar bar-received" style="height: 88%;" data-value="$2,112"></div>
+              <div class="bar bar-expected" style="height: 100%;" data-value="$2,400"></div>
+            </div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label">Abr</div>
+            <div class="bar-wrapper">
+              <div class="bar bar-received" style="height: 92%;" data-value="$2,208"></div>
+              <div class="bar bar-expected" style="height: 100%;" data-value="$2,400"></div>
+            </div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label">May</div>
+            <div class="bar-wrapper">
+              <div class="bar bar-received" style="height: 95%;" data-value="$2,280"></div>
+              <div class="bar bar-expected" style="height: 100%;" data-value="$2,400"></div>
+            </div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-label">Jun</div>
+            <div class="bar-wrapper">
+              <div class="bar bar-received" style="height: 100%;" data-value="$2,400"></div>
+              <div class="bar bar-expected" style="height: 100%;" data-value="$2,400"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-container small">
+      <div class="chart-header">
+        <h3>🎓 Distribución por Grado</h3>
+      </div>
+      <div class="chart-content">
+        <div class="donut-chart">
+          <div class="donut-segment grade-1" style="--percentage: 35;">
+            <div class="donut-value">35%</div>
+          </div>
+          <div class="donut-labels">
+            <div class="donut-label">
+              <span class="donut-color" style="background: #667eea;"></span>
+              <span>1° Grado: 17 estudiantes</span>
+            </div>
+            <div class="donut-label">
+              <span class="donut-color" style="background: #f5576c;"></span>
+              <span>2° Grado: 18 estudiantes</span>
+            </div>
+            <div class="donut-label">
+              <span class="donut-color" style="background: #4facfe;"></span>
+              <span>3° Grado: 13 estudiantes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Methods -->
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-box-header">
+        <h3>💳 Métodos de Pago</h3>
+      </div>
+      <div class="payment-methods-list">
+        <div class="payment-method-item">
+          <div class="method-info">
+            <span class="method-icon">💳</span>
+            <span class="method-name">Transferencia</span>
+          </div>
+          <div class="method-stats">
+            <span class="method-count">28 pagos</span>
+            <span class="method-amount">$1,400</span>
+          </div>
+          <div class="method-bar">
+            <div class="method-progress" style="width: 57%;"></div>
+          </div>
+        </div>
+        <div class="payment-method-item">
+          <div class="method-info">
+            <span class="method-icon">💵</span>
+            <span class="method-name">Efectivo</span>
+          </div>
+          <div class="method-stats">
+            <span class="method-count">12 pagos</span>
+            <span class="method-amount">$600</span>
+          </div>
+          <div class="method-bar">
+            <div class="method-progress" style="width: 24%;"></div>
+          </div>
+        </div>
+        <div class="payment-method-item">
+          <div class="method-info">
+            <span class="method-icon">📱</span>
+            <span class="method-name">Pago Móvil</span>
+          </div>
+          <div class="method-stats">
+            <span class="method-count">9 pagos</span>
+            <span class="method-amount">$450</span>
+          </div>
+          <div class="method-bar">
+            <div class="method-progress" style="width: 19%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-box">
+      <div class="stat-box-header">
+        <h3>⏰ Top Estudiantes Puntuales</h3>
+      </div>
+      <div class="top-students-list">
+        <div class="top-student-item">
+          <div class="student-rank">1</div>
+          <div class="student-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">MA</div>
+          <div class="student-details">
+            <div class="student-name">María Alejandra González</div>
+            <div class="student-streak">🔥 12 meses consecutivos</div>
+          </div>
+        </div>
+        <div class="top-student-item">
+          <div class="student-rank">2</div>
+          <div class="student-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">JC</div>
+          <div class="student-details">
+            <div class="student-name">Juan Carlos Ramírez</div>
+            <div class="student-streak">🔥 11 meses consecutivos</div>
+          </div>
+        </div>
+        <div class="top-student-item">
+          <div class="student-rank">3</div>
+          <div class="student-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">DT</div>
+          <div class="student-details">
+            <div class="student-name">Daniel Torres Pérez</div>
+            <div class="student-streak">🔥 10 meses consecutivos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div class="table-container">
+    <div class="table-header">
+      <h3>📋 Resumen por Grado</h3>
+      <button class="btn-secondary" id="btn-detailed-report">Ver Detalle Completo</button>
+    </div>
+    <table id="summary-table">
+      <thead>
+        <tr>
+          <th>Grado</th>
+          <th>Estudiantes</th>
+          <th>Pagos al Día</th>
+          <th>Pagos Pendientes</th>
+          <th>Ingresos</th>
+          <th>Tasa de Cobro</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1° Grado</strong></td>
+          <td>17</td>
+          <td><span class="badge-success">16</span></td>
+          <td><span class="badge-warning">1</span></td>
+          <td><strong>$850</strong></td>
+          <td>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="width: 94%;"></div>
+              <span class="progress-text">94%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>2° Grado</strong></td>
+          <td>18</td>
+          <td><span class="badge-success">17</span></td>
+          <td><span class="badge-warning">1</span></td>
+          <td><strong>$900</strong></td>
+          <td>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="width: 94%;"></div>
+              <span class="progress-text">94%</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>3° Grado</strong></td>
+          <td>13</td>
+          <td><span class="badge-success">12</span></td>
+          <td><span class="badge-warning">1</span></td>
+          <td><strong>$650</strong></td>
+          <td>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="width: 92%;"></div>
+              <span class="progress-text">92%</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td><strong>TOTAL</strong></td>
+          <td><strong>48</strong></td>
+          <td><strong>45</strong></td>
+          <td><strong>3</strong></td>
+          <td><strong>$2,450</strong></td>
+          <td><strong>93.7%</strong></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

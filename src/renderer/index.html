@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyKids - Estudio Dirigido</title>
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/estudiantes.css">
+  <link rel="stylesheet" href="styles/pagos.css">
+  <link rel="stylesheet" href="styles/reportes.css">
+  <link rel="stylesheet" href="styles/calendario.css">
+  <link rel="stylesheet" href="styles/padres.css">
+</head>
+<body>
+  <div class="decoration star star1">⭐</div>
+  <div class="decoration star star2">🌟</div>
+  <div class="decoration star star3">✨</div>
+
+  <div class="app-container">
+    <div class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">📚</div>
+        <div class="logo-text">
+          <h1>StudyKids</h1>
+          <p>Gestión Educativa</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <div class="nav-item active" data-page="estudiantes">
+          <span class="nav-icon">👥</span>
+          <span>Estudiantes</span>
+        </div>
+        <div class="nav-item" data-page="pagos">
+          <span class="nav-icon">💰</span>
+          <span>Pagos</span>
+        </div>
+        <div class="nav-item" data-page="reportes">
+          <span class="nav-icon">📊</span>
+          <span>Reportes</span>
+        </div>
+        <div class="nav-item" data-page="calendario">
+          <span class="nav-icon">📅</span>
+          <span>Calendario</span>
+        </div>
+        <div class="nav-item" data-page="padres">
+          <span class="nav-icon">👨‍👩‍👧‍👦</span>
+          <span>Padres</span>
+        </div>
+        <div class="nav-item" data-page="configuracion">
+          <span class="nav-icon">⚙️</span>
+          <span>Configuración</span>
+        </div>
+      </nav>
+    </div>
+
+
+    <div class="main-content">
+      <div id="page-content">
+        <!-- Page content will be loaded here dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <script src="router.js"></script>
+  <script src="js/AppEvents.js"></script>
+</body>
+</html>

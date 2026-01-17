@@ -1,0 +1,183 @@
+<div class="header">
+  <div class="header-title">
+    <h2>Gestión de Estudiantes</h2>
+    <p>Administra la información de tus estudiantes</p>
+  </div>
+  <div class="header-actions">
+    <input type="text" class="search-box" id="search-students" placeholder="🔍 Buscar estudiante...">
+    <button class="btn-primary" id="btn-new-student">
+      <span>➕</span>
+      <span>Nuevo Estudiante</span>
+    </button>
+  </div>
+</div>
+
+
+<div class="content-area">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">👦</div>
+      <div class="stat-value">48</div>
+      <div class="stat-label">Total Estudiantes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">✅</div>
+      <div class="stat-value">45</div>
+      <div class="stat-label">Pagos al Día</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">⏰</div>
+      <div class="stat-value">3</div>
+      <div class="stat-label">Pagos Pendientes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">💵</div>
+      <div class="stat-value">$2,450</div>
+      <div class="stat-label">Ingresos del Mes</div>
+    </div>
+  </div>
+
+ 
+  <div class="table-container">
+    <div class="table-header">
+      <h3>📋 Lista de Estudiantes</h3>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="todos">Todos</button>
+        <button class="filter-btn" data-filter="1">1° Grado</button>
+        <button class="filter-btn" data-filter="2">2° Grado</button>
+        <button class="filter-btn" data-filter="3">3° Grado</button>
+      </div>
+    </div>
+
+    <table id="students-table">
+      <thead>
+        <tr>
+          <th>Estudiante</th>
+          <th>Edad</th>
+          <th>Grado</th>
+          <th>Representante</th>
+          <th>Teléfono</th>
+          <th>Estado Pago</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="students-tbody">
+        <tr>
+          <td>
+            <div class="student-info">
+              <div class="student-avatar">MA</div>
+              <div>
+                <div style="font-weight: 600;">María Alejandra González</div>
+                <div style="font-size: 12px; color: #718096;">Inicio: 15/01/2024</div>
+              </div>
+            </div>
+          </td>
+          <td>7 años</td>
+          <td>2° Grado</td>
+          <td>Carmen González</td>
+          <td>+58 424-1234567</td>
+          <td><span class="status-badge status-active">Al día</span></td>
+          <td>
+            <div class="action-buttons">
+              <button class="action-btn btn-view">👁️</button>
+              <button class="action-btn btn-edit">✏️</button>
+              <button class="action-btn btn-delete">🗑️</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="student-info">
+              <div class="student-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">JC</div>
+              <div>
+                <div style="font-weight: 600;">Juan Carlos Ramírez</div>
+                <div style="font-size: 12px; color: #718096;">Inicio: 10/02/2024</div>
+              </div>
+            </div>
+          </td>
+          <td>6 años</td>
+          <td>1° Grado</td>
+          <td>Pedro Ramírez</td>
+          <td>+58 412-9876543</td>
+          <td><span class="status-badge status-active">Al día</span></td>
+          <td>
+            <div class="action-buttons">
+              <button class="action-btn btn-view">👁️</button>
+              <button class="action-btn btn-edit">✏️</button>
+              <button class="action-btn btn-delete">🗑️</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="student-info">
+              <div class="student-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">SM</div>
+              <div>
+                <div style="font-weight: 600;">Sofía Martínez López</div>
+                <div style="font-size: 12px; color: #718096;">Inicio: 05/03/2024</div>
+              </div>
+            </div>
+          </td>
+          <td>8 años</td>
+          <td>3° Grado</td>
+          <td>Ana López</td>
+          <td>+58 426-5551234</td>
+          <td><span class="status-badge status-pending">Pendiente</span></td>
+          <td>
+            <div class="action-buttons">
+              <button class="action-btn btn-view">👁️</button>
+              <button class="action-btn btn-edit">✏️</button>
+              <button class="action-btn btn-delete">🗑️</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="student-info">
+              <div class="student-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">DT</div>
+              <div>
+                <div style="font-weight: 600;">Daniel Torres Pérez</div>
+                <div style="font-size: 12px; color: #718096;">Inicio: 20/01/2024</div>
+              </div>
+            </div>
+          </td>
+          <td>7 años</td>
+          <td>2° Grado</td>
+          <td>Luis Torres</td>
+          <td>+58 414-7778888</td>
+          <td><span class="status-badge status-active">Al día</span></td>
+          <td>
+            <div class="action-buttons">
+              <button class="action-btn btn-view">👁️</button>
+              <button class="action-btn btn-edit">✏️</button>
+              <button class="action-btn btn-delete">🗑️</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="student-info">
+              <div class="student-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">VS</div>
+              <div>
+                <div style="font-weight: 600;">Valentina Suárez Castro</div>
+                <div style="font-size: 12px; color: #718096;">Inicio: 12/02/2024</div>
+              </div>
+            </div>
+          </td>
+          <td>6 años</td>
+          <td>1° Grado</td>
+          <td>María Castro</td>
+          <td>+58 424-3332222</td>
+          <td><span class="status-badge status-active">Al día</span></td>
+          <td>
+            <div class="action-buttons">
+              <button class="action-btn btn-view">👁️</button>
+              <button class="action-btn btn-edit">✏️</button>
+              <button class="action-btn btn-delete">🗑️</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
