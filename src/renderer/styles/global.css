@@ -8,17 +8,14 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  height: 100vh;
   overflow: hidden;
 }
 
 .app-container {
   display: flex;
   height: 100vh;
-  background: white;
   margin: 20px;
   border-radius: 24px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
 
@@ -42,7 +39,6 @@ body {
   padding: 15px;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 16px;
-  backdrop-filter: blur(10px);
 }
 
 .logo-icon {
@@ -63,7 +59,6 @@ body {
 
 .logo-text p {
   font-size: 12px;
-  opacity: 0.9;
 }
 
 .nav-menu {
@@ -99,22 +94,18 @@ body {
 }
 
 /* ============================================
-   MAIN CONTENT - CORREGIDO ✅
+   MAIN CONTENT
 ============================================ */
 .main-content {
   flex: 1;
-  display: flex;
-  flex-direction: column;
   background: #f8f9fc;
-  overflow: hidden; /* ✅ Importante: evita scroll doble */
-  height: 100%; /* ✅ Asegura que ocupe toda la altura */
 }
 
 #page-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* ✅ El contenedor no hace scroll */
+  overflow: hidden;
   height: 100%;
 }
 
@@ -128,7 +119,7 @@ body {
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid #e9ecef;
-  flex-shrink: 0; /* ✅ Evita que el header se comprima */
+  flex-shrink: 0;
 }
 
 .header-title h2 {
@@ -154,12 +145,11 @@ body {
 .content-area {
   flex: 1;
   padding: 30px 40px;
-  overflow-y: auto; /* ✅ Solo esta área hace scroll */
+  overflow-y: auto;
   overflow-x: hidden;
-  min-height: 0; /* ✅ Permite que flex calcule correctamente */
+  min-height: 0;
 }
 
-/* Estilos del scrollbar (opcional pero bonito) */
 .content-area::-webkit-scrollbar {
   width: 8px;
 }
@@ -463,18 +453,5 @@ body {
   color: #2d3748;
 }
 
-/* ============================================
-   AVATAR
-============================================ */
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 600;
-  font-size: 16px;
-}
+
+

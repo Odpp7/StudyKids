@@ -288,32 +288,6 @@
   color: #a0aec0;
 }
 
-/* Responsive */
-@media (max-width: 1200px) {
-  .quick-actions-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .communication-stats .stats-row {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .quick-actions-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .communication-stats .stats-row {
-    grid-template-columns: 1fr;
-  }
-  
-  .students-list {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-}
-
 /* Filter animations */
 tbody tr[data-filter] {
   transition: opacity 0.3s, transform 0.3s;

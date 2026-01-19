@@ -1,3 +1,4 @@
+<!-- HEADER -->
 <div class="header">
   <div class="header-title">
     <h2>Gestión de Estudiantes</h2>
@@ -6,63 +7,75 @@
   <div class="header-actions">
     <input type="text" class="search-box" id="search-students" placeholder="🔍 Buscar estudiante...">
     <button class="btn-primary" id="btn-new-student">
-      <span>➕</span>
+      <span><i class="fa-solid fa-plus"></i></span>
       <span>Nuevo Estudiante</span>
     </button>
   </div>
 </div>
 
+<!-- SELECTOR JORNADA -->
+<div class="turn-selector">
+  <button class="turn-btn active" data-turn="manana">
+    <span class="turn-icon"><i class="fa-solid fa-sun"></i></span>
+    <div>
+      <div class="turn-label">Jornada Mañana</div>
+      <div class="turn-count">24 estudiantes</div>
+    </div>
+  </button>
+  <button class="turn-btn" data-turn="tarde">
+    <span class="turn-icon"><i class="fa-solid fa-moon"></i></span>
+    <div>
+      <div class="turn-label">Jornada Tarde</div>
+      <div class="turn-count">18 estudiantes</div>
+    </div>
+  </button>
+</div>
 
 <div class="content-area">
+  <!-- STATS -->
   <div class="stats-grid">
     <div class="stat-card">
-      <div class="stat-icon">👦</div>
-      <div class="stat-value">48</div>
+      <div class="stat-icon"><i class="fa-solid fa-child"></i></div>
+      <div class="stat-value" id="stat-total">24</div>
       <div class="stat-label">Total Estudiantes</div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon">✅</div>
-      <div class="stat-value">45</div>
+      <div class="stat-icon"><i class="fa-solid fa-check"></i></div>
+      <div class="stat-value" id="stat-paid">22</div>
       <div class="stat-label">Pagos al Día</div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon">⏰</div>
-      <div class="stat-value">3</div>
+      <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
+      <div class="stat-value" id="stat-pending">2</div>
       <div class="stat-label">Pagos Pendientes</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon">💵</div>
-      <div class="stat-value">$2,450</div>
-      <div class="stat-label">Ingresos del Mes</div>
     </div>
   </div>
 
- 
+  <!-- TABLE -->
   <div class="table-container">
     <div class="table-header">
-      <h3>📋 Lista de Estudiantes</h3>
+      <h3 id="table-title"> Estudiantes - Jornada Mañana</h3>
       <div class="filter-buttons">
         <button class="filter-btn active" data-filter="todos">Todos</button>
-        <button class="filter-btn" data-filter="1">1° Grado</button>
-        <button class="filter-btn" data-filter="2">2° Grado</button>
-        <button class="filter-btn" data-filter="3">3° Grado</button>
       </div>
     </div>
 
-    <table id="students-table">
+    <!-- TURNO MAÑANA-->
+    <table id="students-table-manana" class="students-table active-table">
       <thead>
         <tr>
           <th>Estudiante</th>
           <th>Edad</th>
+          <th>Fecha Nac.</th>
+          <th>Acudiente</th>
           <th>Grado</th>
-          <th>Representante</th>
-          <th>Teléfono</th>
+          <th>Mensualidad</th>
           <th>Estado Pago</th>
           <th>Acciones</th>
         </tr>
       </thead>
-      <tbody id="students-tbody">
-        <tr>
+      <tbody id="students-tbody-manana">
+        <tr data-turn="manana" data-grade="2">
           <td>
             <div class="student-info">
               <div class="student-avatar">MA</div>
@@ -73,19 +86,20 @@
             </div>
           </td>
           <td>7 años</td>
-          <td>2° Grado</td>
+          <td>12/05/2017</td>
           <td>Carmen González</td>
-          <td>+58 424-1234567</td>
+          <td>Prejardin</td>
+          <td>$150</td>
           <td><span class="status-badge status-active">Al día</span></td>
           <td>
             <div class="action-buttons">
-              <button class="action-btn btn-view">👁️</button>
-              <button class="action-btn btn-edit">✏️</button>
-              <button class="action-btn btn-delete">🗑️</button>
+              <button class="action-btn btn-view" title="Ver detalles">👁️</button>
+              <button class="action-btn btn-edit" title="Editar">✏️</button>
+              <button class="action-btn btn-delete" title="Eliminar">🗑️</button>
             </div>
           </td>
         </tr>
-        <tr>
+        <tr data-turn="manana" data-grade="1">
           <td>
             <div class="student-info">
               <div class="student-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">JC</div>
@@ -96,42 +110,86 @@
             </div>
           </td>
           <td>6 años</td>
-          <td>1° Grado</td>
+          <td>20/08/2018</td>
           <td>Pedro Ramírez</td>
-          <td>+58 412-9876543</td>
+          <td>Prejardin</td>
+          <td>$150</td>
           <td><span class="status-badge status-active">Al día</span></td>
           <td>
             <div class="action-buttons">
-              <button class="action-btn btn-view">👁️</button>
-              <button class="action-btn btn-edit">✏️</button>
-              <button class="action-btn btn-delete">🗑️</button>
+              <button class="action-btn btn-view" title="Ver detalles">👁️</button>
+              <button class="action-btn btn-edit" title="Editar">✏️</button>
+              <button class="action-btn btn-delete" title="Eliminar">🗑️</button>
             </div>
           </td>
         </tr>
-        <tr>
+        <tr data-turn="manana" data-grade="3">
           <td>
             <div class="student-info">
-              <div class="student-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">SM</div>
+              <div class="student-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">LC</div>
+              <div>
+                <div style="font-weight: 600;">Luis Carlos Pérez</div>
+                <div style="font-size: 12px; color: #718096;">Inicio: 05/03/2024</div>
+              </div>
+            </div>
+          </td>
+          <td>8 años</td>
+          <td>15/03/2016</td>
+          <td>Ana Pérez</td>
+          <td>Jardin</td>
+          <td>$150</td>
+          <td><span class="status-badge status-pending">Pendiente</span></td>
+          <td>
+            <div class="action-buttons">
+              <button class="action-btn btn-view" title="Ver detalles">👁️</button>
+              <button class="action-btn btn-edit" title="Editar">✏️</button>
+              <button class="action-btn btn-delete" title="Eliminar">🗑️</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Tabla para Turno Tarde -->
+    <table id="students-table-tarde" class="students-table" style="display: none;">
+      <thead>
+        <tr>
+          <th>Estudiante</th>
+          <th>Edad</th>
+          <th>Colegio</th>
+          <th>Grado</th>
+          <th>Acudiente</th>
+          <th>Teléfono</th>
+          <th>Estado Pago</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="students-tbody-tarde">
+        <tr data-turn="tarde" data-grade="5">
+          <td>
+            <div class="student-info">
+              <div class="student-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">SM</div>
               <div>
                 <div style="font-weight: 600;">Sofía Martínez López</div>
                 <div style="font-size: 12px; color: #718096;">Inicio: 05/03/2024</div>
               </div>
             </div>
           </td>
-          <td>8 años</td>
-          <td>3° Grado</td>
+          <td>10 años</td>
+          <td>U.E. San José</td>
+          <td>5° Grado</td>
           <td>Ana López</td>
           <td>+58 426-5551234</td>
-          <td><span class="status-badge status-pending">Pendiente</span></td>
+          <td><span class="status-badge status-active">Al día</span></td>
           <td>
             <div class="action-buttons">
-              <button class="action-btn btn-view">👁️</button>
-              <button class="action-btn btn-edit">✏️</button>
-              <button class="action-btn btn-delete">🗑️</button>
+              <button class="action-btn btn-view" title="Ver detalles">👁️</button>
+              <button class="action-btn btn-edit" title="Editar">✏️</button>
+              <button class="action-btn btn-delete" title="Eliminar">🗑️</button>
             </div>
           </td>
         </tr>
-        <tr>
+        <tr data-turn="tarde" data-grade="6">
           <td>
             <div class="student-info">
               <div class="student-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">DT</div>
@@ -141,43 +199,221 @@
               </div>
             </div>
           </td>
-          <td>7 años</td>
-          <td>2° Grado</td>
+          <td>11 años</td>
+          <td>Colegio Nacional</td>
+          <td>6° Grado</td>
           <td>Luis Torres</td>
           <td>+58 414-7778888</td>
           <td><span class="status-badge status-active">Al día</span></td>
           <td>
             <div class="action-buttons">
-              <button class="action-btn btn-view">👁️</button>
-              <button class="action-btn btn-edit">✏️</button>
-              <button class="action-btn btn-delete">🗑️</button>
+              <button class="action-btn btn-view" title="Ver detalles">👁️</button>
+              <button class="action-btn btn-edit" title="Editar">✏️</button>
+              <button class="action-btn btn-delete" title="Eliminar">🗑️</button>
             </div>
           </td>
         </tr>
-        <tr>
+        <tr data-turn="tarde" data-grade="4">
           <td>
             <div class="student-info">
-              <div class="student-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">VS</div>
+              <div class="student-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">VS</div>
               <div>
                 <div style="font-weight: 600;">Valentina Suárez Castro</div>
                 <div style="font-size: 12px; color: #718096;">Inicio: 12/02/2024</div>
               </div>
             </div>
           </td>
-          <td>6 años</td>
-          <td>1° Grado</td>
+          <td>9 años</td>
+          <td>U.E. Simón Bolívar</td>
+          <td>4° Grado</td>
           <td>María Castro</td>
           <td>+58 424-3332222</td>
-          <td><span class="status-badge status-active">Al día</span></td>
+          <td><span class="status-badge status-pending">Pendiente</span></td>
           <td>
             <div class="action-buttons">
-              <button class="action-btn btn-view">👁️</button>
-              <button class="action-btn btn-edit">✏️</button>
-              <button class="action-btn btn-delete">🗑️</button>
+              <button class="action-btn btn-view" title="Ver detalles"><i class="fa-solid fa-eye"></i></button>
+              <button class="action-btn btn-edit" title="Editar"><i class="fa-solid fa-pencil"></i></button>
+              <button class="action-btn btn-delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+
+
+<!-- MODAL -->
+<div id="student-modal" class="modal-overlay">
+  <div class="modal-content-estudiantes">
+    <div class="modal-header">
+      <h2 id="modal-title"><i class="fa-solid fa-plus"></i> Nuevo Estudiante</h2>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    
+    <form id="student-form">
+      <input type="hidden" id="student-id">
+      
+      <!-- Selección de Turno -->
+      <div class="form-section">
+        <h3><i class="fa-solid fa-clock"></i> Turno</h3>
+        <div class="turn-selection">
+          <label class="radio-card">
+            <input type="radio" name="turno" value="manana" checked>
+            <div class="radio-card-content">
+              <span class="radio-icon"><i class="fa-solid fa-sun"></i></span>
+              <span class="radio-label">Mañana</span>
+            </div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="turno" value="tarde">
+            <div class="radio-card-content">
+              <span class="radio-icon"><i class="fa-solid fa-moon"></i></span>
+              <span class="radio-label">Tarde</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Información Personal -->
+      <div class="form-section">
+        <h3><i class="fa-solid fa-user"></i> Información Personal</h3>
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label>Nombre Completo *</label>
+            <input type="text" id="student-name" placeholder="Ej: María Alejandra González" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Fecha de Nacimiento *</label>
+            <input type="date" id="student-birthdate" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Edad</label>
+            <input type="number" id="student-age">
+          </div>
+          
+          <div class="form-group full-width">
+            <label>Dirección</label>
+            <input type="text" id="student-address" placeholder="Ej: Calle 15 con Carrera 20">
+          </div>
+        </div>
+      </div>
+
+      <!-- Información Académica (solo para turno tarde) -->
+      <div class="form-section" id="academic-section" style="display: none;">
+        <h3><i class="fa-brands fa-google-scholar"></i> Información Académica</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Colegio *</label>
+            <input type="text" id="student-school" placeholder="Ej: U.E. San José">
+          </div>
+          
+          <div class="form-group">
+            <label>Grado *</label>
+            <select id="student-grade-tarde">
+              <option value="">Seleccionar grado</option>
+              <option value="4">Prejardin</option>
+              <option value="5">Jardin</option>
+              <option value="6">Transicion</option>
+              <option value="7">1° Grado</option>
+              <option value="8">2° Grado</option>
+              <option value="9">3° Grado</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grado (solo para turno mañana) -->
+      <div class="form-section" id="grade-section">
+        <h3><i class="fa-solid fa-book"></i> Grado</h3>
+        <div class="form-group">
+          <label>Grado *</label>
+          <select id="student-grade-manana">
+            <option value="">Seleccionar grado</option>
+            <option value="1">Prejardin</option>
+            <option value="2">Jardin</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Información del Acudiente -->
+      <div class="form-section">
+        <h3><i class="fa-solid fa-people-group"></i> Información del Acudiente</h3>
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label>Nombre del Acudiente *</label>
+            <input type="text" id="parent-name" placeholder="Ej: Carmen González" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Teléfono *</label>
+            <input type="tel" id="parent-phone" placeholder="+58 424-1234567" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="parent-email" placeholder="ejemplo@correo.com">
+          </div>
+          
+          <div class="form-group full-width">
+            <label>Relación con el Estudiante</label>
+            <select id="parent-relation">
+              <option value="madre">Madre</option>
+              <option value="padre">Padre</option>
+              <option value="abuela">Abuela</option>
+              <option value="abuelo">Abuelo</option>
+              <option value="tia">Tía</option>
+              <option value="tio">Tío</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Información de Mensualidad -->
+      <div class="form-section">
+        <h3><i class="fa-solid fa-sack-dollar"></i> Información de Mensualidad</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Valor de Mensualidad *</label>
+            <input type="number" id="student-fee" placeholder="150" step="0.01" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Fecha de Inicio *</label>
+            <input type="date" id="student-start-date" required>
+          </div>
+          
+          <div class="form-group full-width">
+            <label>Estado de Pago</label>
+            <select id="payment-status">
+              <option value="al-dia">Al día</option>
+              <option value="pendiente">Pendiente</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Observaciones -->
+      <div class="form-section">
+        <h3><i class="fa-solid fa-note-sticky"></i> Observaciones</h3>
+        <div class="form-group full-width">
+          <label>Notas Adicionales</label>
+          <textarea id="student-notes" rows="3" placeholder="Alergias, condiciones especiales, etc."></textarea>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="btn-cancel">Cancelar</button>
+        <button type="submit" class="btn-primary">
+          <span><i class="fa-solid fa-floppy-disk"></i></span>
+          <span>Guardar Estudiante</span>
+        </button>
+      </div>
+    </form>
   </div>
 </div>

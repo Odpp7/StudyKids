@@ -2,12 +2,15 @@ require('electron-reloader')(module);
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
+require('./database/scheme');
+require('./ipc');
+
 function createWindow() {
   const win = new BrowserWindow({
     show: false,
     autoHideMenuBar: true,
     webPreferences: {
-      preload: path.join(__dirname, '../preload/preload.js')
+      preload: path.join(__dirname, 'preload/preload.js'),
     }
   });
 
