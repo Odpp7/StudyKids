@@ -19,14 +19,12 @@
     <span class="turn-icon"><i class="fa-solid fa-sun"></i></span>
     <div>
       <div class="turn-label">Jornada Mañana</div>
-      <div class="turn-count">24 estudiantes</div>
     </div>
   </button>
   <button class="turn-btn" data-turn="tarde">
     <span class="turn-icon"><i class="fa-solid fa-moon"></i></span>
     <div>
       <div class="turn-label">Jornada Tarde</div>
-      <div class="turn-count">18 estudiantes</div>
     </div>
   </button>
 </div>
@@ -36,17 +34,17 @@
   <div class="stats-grid">
     <div class="stat-card">
       <div class="stat-icon"><i class="fa-solid fa-child"></i></div>
-      <div class="stat-value" id="stat-total">24</div>
+      <div class="stat-value" id="stat-total">N/A</div>
       <div class="stat-label">Total Estudiantes</div>
     </div>
     <div class="stat-card">
       <div class="stat-icon"><i class="fa-solid fa-check"></i></div>
-      <div class="stat-value" id="stat-paid">22</div>
+      <div class="stat-value" id="stat-paid">N/A</div>
       <div class="stat-label">Pagos al Día</div>
     </div>
     <div class="stat-card">
       <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
-      <div class="stat-value" id="stat-pending">2</div>
+      <div class="stat-value" id="stat-pending">N/A</div>
       <div class="stat-label">Pagos Pendientes</div>
     </div>
   </div>
@@ -75,78 +73,7 @@
         </tr>
       </thead>
       <tbody id="students-tbody-manana">
-        <tr data-turn="manana" data-grade="2">
-          <td>
-            <div class="student-info">
-              <div class="student-avatar">MA</div>
-              <div>
-                <div style="font-weight: 600;">María Alejandra González</div>
-                <div style="font-size: 12px; color: #718096;">Inicio: 15/01/2024</div>
-              </div>
-            </div>
-          </td>
-          <td>7 años</td>
-          <td>12/05/2017</td>
-          <td>Carmen González</td>
-          <td>Prejardin</td>
-          <td>$150</td>
-          <td><span class="status-badge status-active">Al día</span></td>
-          <td>
-            <div class="action-buttons">
-              <button class="action-btn btn-view" title="Ver detalles">👁️</button>
-              <button class="action-btn btn-edit" title="Editar">✏️</button>
-              <button class="action-btn btn-delete" title="Eliminar">🗑️</button>
-            </div>
-          </td>
-        </tr>
-        <tr data-turn="manana" data-grade="1">
-          <td>
-            <div class="student-info">
-              <div class="student-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">JC</div>
-              <div>
-                <div style="font-weight: 600;">Juan Carlos Ramírez</div>
-                <div style="font-size: 12px; color: #718096;">Inicio: 10/02/2024</div>
-              </div>
-            </div>
-          </td>
-          <td>6 años</td>
-          <td>20/08/2018</td>
-          <td>Pedro Ramírez</td>
-          <td>Prejardin</td>
-          <td>$150</td>
-          <td><span class="status-badge status-active">Al día</span></td>
-          <td>
-            <div class="action-buttons">
-              <button class="action-btn btn-view" title="Ver detalles">👁️</button>
-              <button class="action-btn btn-edit" title="Editar">✏️</button>
-              <button class="action-btn btn-delete" title="Eliminar">🗑️</button>
-            </div>
-          </td>
-        </tr>
-        <tr data-turn="manana" data-grade="3">
-          <td>
-            <div class="student-info">
-              <div class="student-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">LC</div>
-              <div>
-                <div style="font-weight: 600;">Luis Carlos Pérez</div>
-                <div style="font-size: 12px; color: #718096;">Inicio: 05/03/2024</div>
-              </div>
-            </div>
-          </td>
-          <td>8 años</td>
-          <td>15/03/2016</td>
-          <td>Ana Pérez</td>
-          <td>Jardin</td>
-          <td>$150</td>
-          <td><span class="status-badge status-pending">Pendiente</span></td>
-          <td>
-            <div class="action-buttons">
-              <button class="action-btn btn-view" title="Ver detalles">👁️</button>
-              <button class="action-btn btn-edit" title="Editar">✏️</button>
-              <button class="action-btn btn-delete" title="Eliminar">🗑️</button>
-            </div>
-          </td>
-        </tr>
+          <!-- ESTUDIANTES DE MAÑANA -->
       </tbody>
     </table>
 
@@ -156,87 +83,16 @@
         <tr>
           <th>Estudiante</th>
           <th>Edad</th>
-          <th>Colegio</th>
-          <th>Grado</th>
+          <th>Fecha Nac.</th>
           <th>Acudiente</th>
-          <th>Teléfono</th>
+          <th>Grado</th>
+          <th>Mensualidad</th>
           <th>Estado Pago</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody id="students-tbody-tarde">
-        <tr data-turn="tarde" data-grade="5">
-          <td>
-            <div class="student-info">
-              <div class="student-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">SM</div>
-              <div>
-                <div style="font-weight: 600;">Sofía Martínez López</div>
-                <div style="font-size: 12px; color: #718096;">Inicio: 05/03/2024</div>
-              </div>
-            </div>
-          </td>
-          <td>10 años</td>
-          <td>U.E. San José</td>
-          <td>5° Grado</td>
-          <td>Ana López</td>
-          <td>+58 426-5551234</td>
-          <td><span class="status-badge status-active">Al día</span></td>
-          <td>
-            <div class="action-buttons">
-              <button class="action-btn btn-view" title="Ver detalles">👁️</button>
-              <button class="action-btn btn-edit" title="Editar">✏️</button>
-              <button class="action-btn btn-delete" title="Eliminar">🗑️</button>
-            </div>
-          </td>
-        </tr>
-        <tr data-turn="tarde" data-grade="6">
-          <td>
-            <div class="student-info">
-              <div class="student-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">DT</div>
-              <div>
-                <div style="font-weight: 600;">Daniel Torres Pérez</div>
-                <div style="font-size: 12px; color: #718096;">Inicio: 20/01/2024</div>
-              </div>
-            </div>
-          </td>
-          <td>11 años</td>
-          <td>Colegio Nacional</td>
-          <td>6° Grado</td>
-          <td>Luis Torres</td>
-          <td>+58 414-7778888</td>
-          <td><span class="status-badge status-active">Al día</span></td>
-          <td>
-            <div class="action-buttons">
-              <button class="action-btn btn-view" title="Ver detalles">👁️</button>
-              <button class="action-btn btn-edit" title="Editar">✏️</button>
-              <button class="action-btn btn-delete" title="Eliminar">🗑️</button>
-            </div>
-          </td>
-        </tr>
-        <tr data-turn="tarde" data-grade="4">
-          <td>
-            <div class="student-info">
-              <div class="student-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">VS</div>
-              <div>
-                <div style="font-weight: 600;">Valentina Suárez Castro</div>
-                <div style="font-size: 12px; color: #718096;">Inicio: 12/02/2024</div>
-              </div>
-            </div>
-          </td>
-          <td>9 años</td>
-          <td>U.E. Simón Bolívar</td>
-          <td>4° Grado</td>
-          <td>María Castro</td>
-          <td>+58 424-3332222</td>
-          <td><span class="status-badge status-pending">Pendiente</span></td>
-          <td>
-            <div class="action-buttons">
-              <button class="action-btn btn-view" title="Ver detalles"><i class="fa-solid fa-eye"></i></button>
-              <button class="action-btn btn-edit" title="Editar"><i class="fa-solid fa-pencil"></i></button>
-              <button class="action-btn btn-delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
-            </div>
-          </td>
-        </tr>
+        <!-- ESTUDIANTES DE TARDE -->  
       </tbody>
     </table>
   </div>
@@ -315,12 +171,12 @@
             <label>Grado *</label>
             <select id="student-grade-tarde">
               <option value="">Seleccionar grado</option>
-              <option value="4">Prejardin</option>
-              <option value="5">Jardin</option>
-              <option value="6">Transicion</option>
-              <option value="7">1° Grado</option>
-              <option value="8">2° Grado</option>
-              <option value="9">3° Grado</option>
+              <option value="Prejardin">Prejardin</option>
+              <option value="Jardin">Jardin</option>
+              <option value="Transicion">Transicion</option>
+              <option value="1° Grado">1° Grado</option>
+              <option value="2° Grado">2° Grado</option>
+              <option value="3° Grado">3° Grado</option>
             </select>
           </div>
         </div>
@@ -333,8 +189,8 @@
           <label>Grado *</label>
           <select id="student-grade-manana">
             <option value="">Seleccionar grado</option>
-            <option value="1">Prejardin</option>
-            <option value="2">Jardin</option>
+            <option value="Prejardin">Prejardin</option>
+            <option value="Jardin">Jardin</option>
           </select>
         </div>
       </div>

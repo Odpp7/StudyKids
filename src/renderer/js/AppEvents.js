@@ -11,7 +11,7 @@ pageContent.addEventListener('click', (e) => {
 
   // Abrir modal nuevo estudiante
   if (e.target.closest('#btn-new-student')) {
-    if (window.openStudentModal) openStudentModal();
+    openStudentModal();
   }
 
   // Cerrar modal
@@ -20,45 +20,49 @@ pageContent.addEventListener('click', (e) => {
     e.target.closest('#btn-cancel') ||
     e.target.id === 'student-modal'
   ) {
-    if (window.closeStudentModal) closeStudentModal();
-  }
-
-  // Ver estudiante
-  if (e.target.closest('.btn-view')) {
-    const row = e.target.closest('tr');
-    if (window.viewStudent) viewStudent(row);
-  }
-
-  // Editar estudiante
-  if (e.target.closest('.btn-edit')) {
-    const row = e.target.closest('tr');
-    if (window.editStudent) editStudent(row);
-  }
-
-  // Eliminar estudiante
-  if (e.target.closest('.btn-delete')) {
-    const row = e.target.closest('tr');
-    if (window.deleteStudent) deleteStudent(row);
+    closeStudentModal();
   }
 
   // Cambiar jornada (vista tabla)
   if (e.target.closest('.turn-btn')) {
     const btn = e.target.closest('.turn-btn');
-    const turn = btn.dataset.turn;
-
     document.querySelectorAll('.turn-btn')
       .forEach(b => b.classList.remove('active'));
-
     btn.classList.add('active');
-
-    if (window.changeTurn) changeTurn(turn);
+    changeTurn(btn.dataset.turn);
   }
 
   // Cambiar jornada (formulario)
   if (e.target.name === 'turno') {
-    const turn = e.target.value;
-    if (window.changeFormTurn) changeFormTurn(turn);
+    changeFormTurn(e.target.value);
   }
+
+  // Editar estudiante
+  if (e.target.closest('.btn-edit')) {
+    const btn = e.target.closest('.btn-edit');
+    const id = Number(btn.dataset.id);
+    
+    document.getElementById('modal-title').textContent = 'Editar Estudiante';
+    document.getElementById('student-modal').style.display = 'flex';
+    openEditModal(id);
+  }
+
+  // Eliminar estudiante
+  if (e.target.closest('.btn-delete')) {
+    const btn = e.target.closest('.btn-delete');
+    const id = btn.dataset.id;
+
+    if (confirm('¿Eliminar este estudiante?')) {
+      window.api.eliminarEstudiante(Number(id))
+        .then(() => {
+          alert('Estudiante eliminado');
+          changeTurn(
+            document.querySelector('.turn-btn.active').dataset.turn
+          );
+        });
+    }
+  }
+
 
   /* ===================== PAGOS ===================== */
   // (pendiente)
@@ -83,7 +87,7 @@ pageContent.addEventListener('submit', (e) => {
 
   /* ===================== ESTUDIANTES ===================== */
   if (e.target.id === 'student-form') {
-    if (window.saveStudent) saveStudent(e);
+    saveStudent(e);
   }
 
   /* ===================== PAGOS ===================== */
