@@ -5,10 +5,21 @@
   </div>
   <div class="header-actions">
     <input type="text" class="search-box" id="search-payments" placeholder="🔍 Buscar pago...">
-    <button class="btn-primary" id="btn-new-payment">
-      <span>➕</span>
-      <span>Registrar Pago</span>
-    </button>
+
+    <div class="turn-selector-pagos">
+      <button class="turn-btn-pagos active" data-turn="manana">
+        <span class="turn-icon-pagos"><i class="fa-solid fa-sun"></i></span>
+        <div>
+          <div class="turn-label-pagos">Jornada Mañana</div>
+        </div>
+      </button>
+      <button class="turn-btn-pagos" data-turn="tarde">
+        <span class="turn-icon-pagos"><i class="fa-solid fa-moon"></i></span>
+        <div>
+          <div class="turn-label-pagos">Jornada Tarde</div>
+        </div>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -16,27 +27,24 @@
   <!-- Payment Stats -->
   <div class="payment-stats">
     <div class="payment-card total">
-      <div class="payment-icon">💰</div>
+      <div class="payment-icon"><i class="fa-solid fa-sack-dollar"></i></div>
       <div class="payment-info">
         <div class="payment-value">$2,450</div>
         <div class="payment-label">Ingresos del Mes</div>
-        <div class="payment-trend positive">↑ 12% vs mes anterior</div>
       </div>
     </div>
     <div class="payment-card pending">
-      <div class="payment-icon">⏰</div>
+      <div class="payment-icon"><i class="fa-solid fa-clock"></i></div>
       <div class="payment-info">
         <div class="payment-value">3</div>
         <div class="payment-label">Pagos Pendientes</div>
-        <div class="payment-trend negative">2 vencidos</div>
       </div>
     </div>
     <div class="payment-card completed">
-      <div class="payment-icon">✅</div>
+      <div class="payment-icon"><i class="fa-solid fa-check"></i></div>
       <div class="payment-info">
         <div class="payment-value">45</div>
         <div class="payment-label">Pagos Completados</div>
-        <div class="payment-trend positive">93.7% del total</div>
       </div>
     </div>
   </div>
@@ -44,158 +52,58 @@
   <!-- Payments Table -->
   <div class="table-container">
     <div class="table-header">
-      <h3>💳 Historial de Pagos</h3>
-      <div class="filter-buttons">
-        <button class="filter-btn active" data-filter="todos">Todos</button>
-        <button class="filter-btn" data-filter="completado">Completados</button>
-        <button class="filter-btn" data-filter="pendiente">Pendientes</button>
-        <button class="filter-btn" data-filter="vencido">Vencidos</button>
+      <h3><i class="fa-solid fa-credit-card"></i> Historial de Pagos</h3>
+
+      <div class="month-selector">
+        <label for="month-filter">Mes:</label>
+        <select id="month-filter">
+          <option value="enero">Enero</option>
+          <option value="febrero">Febrero</option>
+          <option value="marzo">Marzo</option>
+          <option value="abril">Abril</option>
+          <option value="mayo">Mayo</option>
+          <option value="junio">Junio</option>
+          <option value="julio">Julio</option>
+          <option value="agosto">Agosto</option>
+          <option value="septiembre">Septiembre</option>
+          <option value="octubre">Octubre</option>
+          <option value="noviembre">Noviembre</option>
+          <option value="diciembre">Diciembre</option>
+        </select>
       </div>
     </div>
 
-    <table id="payments-table">
+    <table id="payments-table-manana">
       <thead>
         <tr>
           <th>Estudiante</th>
-          <th>Mes</th>
+          <th>Mensualidad</th>
           <th>Monto</th>
-          <th>Fecha Pago</th>
-          <th>Método</th>
+          <th>Fecha</th>
+          <th>Concepto</th>
           <th>Estado</th>
           <th>Acciones</th>
         </tr>
       </thead>
-      <tbody id="payments-tbody">
-        <tr data-status="completado">
-          <td>
-            <div class="student-info">
-              <div class="student-avatar">MA</div>
-              <div>María Alejandra González</div>
-            </div>
-          </td>
-          <td>Enero 2025</td>
-          <td><strong>$50.00</strong></td>
-          <td>15/01/2025</td>
-          <td>
-            <span class="payment-method">
-              <span>💳</span> Transferencia
-            </span>
-          </td>
-          <td><span class="status-badge status-completed">Completado</span></td>
-          <td>
-            <div class="action-buttons">
-              <button class="action-btn btn-receipt" title="Ver comprobante">📄</button>
-              <button class="action-btn btn-print" title="Imprimir">🖨️</button>
-            </div>
-          </td>
+      <tbody id="payments-tbody-manana">
+        <!-- FILAS DE PAGOS MAÑANA -->
+      </tbody>
+    </table>
+
+    <table id="payments-table-tarde" style="display: none;">
+      <thead>
+        <tr>
+          <th>Estudiante</th>
+          <th>Mensualidad</th>
+          <th>Monto</th>
+          <th>Fecha</th>
+          <th>Concepto</th>
+          <th>Estado</th>
+          <th>Acciones</th>
         </tr>
-        <tr data-status="completado">
-          <td>
-            <div class="student-info">
-              <div class="student-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">JC</div>
-              <div>Juan Carlos Ramírez</div>
-            </div>
-          </td>
-          <td>Enero 2025</td>
-          <td><strong>$50.00</strong></td>
-          <td>14/01/2025</td>
-          <td>
-            <span class="payment-method">
-              <span>💵</span> Efectivo
-            </span>
-          </td>
-          <td><span class="status-badge status-completed">Completado</span></td>
-          <td>
-            <div class="action-buttons">
-              <button class="action-btn btn-receipt" title="Ver comprobante">📄</button>
-              <button class="action-btn btn-print" title="Imprimir">🖨️</button>
-            </div>
-          </td>
-        </tr>
-        <tr data-status="pendiente">
-          <td>
-            <div class="student-info">
-              <div class="student-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">SM</div>
-              <div>Sofía Martínez López</div>
-            </div>
-          </td>
-          <td>Enero 2025</td>
-          <td><strong>$50.00</strong></td>
-          <td>-</td>
-          <td>-</td>
-          <td><span class="status-badge status-pending">Pendiente</span></td>
-          <td>
-            <div class="action-buttons">
-              <button class="action-btn btn-pay" title="Registrar pago">💰</button>
-              <button class="action-btn btn-remind" title="Enviar recordatorio">📧</button>
-            </div>
-          </td>
-        </tr>
-        <tr data-status="vencido">
-          <td>
-            <div class="student-info">
-              <div class="student-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">LS</div>
-              <div>Laura Silva Mendoza</div>
-            </div>
-          </td>
-          <td>Diciembre 2024</td>
-          <td><strong>$50.00</strong></td>
-          <td>-</td>
-          <td>-</td>
-          <td><span class="status-badge status-overdue">Vencido</span></td>
-          <td>
-            <div class="action-buttons">
-              <button class="action-btn btn-pay" title="Registrar pago">💰</button>
-              <button class="action-btn btn-remind" title="Enviar recordatorio">📧</button>
-            </div>
-          </td>
-        </tr>
-        <tr data-status="completado">
-          <td>
-            <div class="student-info">
-              <div class="student-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">DT</div>
-              <div>Daniel Torres Pérez</div>
-            </div>
-          </td>
-          <td>Enero 2025</td>
-          <td><strong>$50.00</strong></td>
-          <td>13/01/2025</td>
-          <td>
-            <span class="payment-method">
-              <span>💳</span> Pago Móvil
-            </span>
-          </td>
-          <td><span class="status-badge status-completed">Completado</span></td>
-          <td>
-            <div class="action-buttons">
-              <button class="action-btn btn-receipt" title="Ver comprobante">📄</button>
-              <button class="action-btn btn-print" title="Imprimir">🖨️</button>
-            </div>
-          </td>
-        </tr>
-        <tr data-status="completado">
-          <td>
-            <div class="student-info">
-              <div class="student-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">VS</div>
-              <div>Valentina Suárez Castro</div>
-            </div>
-          </td>
-          <td>Enero 2025</td>
-          <td><strong>$50.00</strong></td>
-          <td>12/01/2025</td>
-          <td>
-            <span class="payment-method">
-              <span>💵</span> Efectivo
-            </span>
-          </td>
-          <td><span class="status-badge status-completed">Completado</span></td>
-          <td>
-            <div class="action-buttons">
-              <button class="action-btn btn-receipt" title="Ver comprobante">📄</button>
-              <button class="action-btn btn-print" title="Imprimir">🖨️</button>
-            </div>
-          </td>
-        </tr>
+      </thead>
+      <tbody id="payments-tbody-tarde">
+        <!-- FILAS DE PAGOS TARDE -->
       </tbody>
     </table>
   </div>
@@ -220,6 +128,137 @@
         <span class="summary-label">Efectividad</span>
         <span class="summary-value text-success">93.7%</span>
       </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal de Registro de Pago -->
+<div id="payment-modal" class="modal" style="display: none;">
+  <div class="modal-content modal-large">
+    <div class="modal-header">
+      <h2 id="payment-modal-title"><i class="fa-solid fa-sack-dollar"></i> Registrar Pago</h2>
+      <button class="modal-close" id="payment-modal-close">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <form id="payment-form">
+        <input type="hidden" id="payment-estudiante-id">
+
+
+        <div class="student-payment-info">
+          <h3 id="payment-student-name"></h3>
+          <p>Mensualidad: <strong id="payment-mensualidad"></strong></p>
+          <p>Último mes pagado: <strong id="payment-ultimo-mes">-</strong></p>
+          <p class="text-danger" id="payment-deuda" style="display: none;">
+            Deuda pendiente: <strong></strong>
+          </p>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <div class="form-section">
+          <div class="form-row-pagos">
+            <div class="form-group">
+              <label for="payment-tipo"><i class="fa-solid fa-hand-holding-dollar"></i> Tipo de Pago *</label>
+              <select id="payment-tipo" required>
+                <option value="">Seleccionar...</option>
+                <option value="abono">Abono</option>
+                <option value="pago-mes">Pago Completo del Mes</option>
+                <option value="adelantado">Pago Adelantado</option>
+              </select>
+            </div>
+
+            <!-- Selector de mes (se oculta cuando es pago adelantado) -->
+            <div class="form-group" id="payment-mes-container">
+              <label for="payment-mes"><i class="fa-solid fa-calendar"></i> Mes *</label>
+              <select id="payment-mes" required>
+                <option value="">Seleccionar mes...</option>
+                <option value="enero">Enero</option>
+                <option value="febrero">Febrero</option>
+                <option value="marzo">Marzo</option>
+                <option value="abril">Abril</option>
+                <option value="mayo">Mayo</option>
+                <option value="junio">Junio</option>
+                <option value="julio">Julio</option>
+                <option value="agosto">Agosto</option>
+                <option value="septiembre">Septiembre</option>
+                <option value="octubre">Octubre</option>
+                <option value="noviembre">Noviembre</option>
+                <option value="diciembre">Diciembre</option>
+              </select>
+            </div>
+
+            <!-- Rango de fechas para pago adelantado (oculto por defecto) -->
+            <div class="form-group" id="payment-rango-container" style="display: none;">
+              <label>
+                <i class="fa-solid fa-calendar-days"></i> Periodo de Pago *
+              </label>
+
+              <div class="months-grid">
+                <label><input type="checkbox" value="enero"> Enero</label>
+                <label><input type="checkbox" value="febrero"> Febrero</label>
+                <label><input type="checkbox" value="marzo"> Marzo</label>
+                <label><input type="checkbox" value="abril"> Abril</label>
+                <label><input type="checkbox" value="mayo"> Mayo</label>
+                <label><input type="checkbox" value="junio"> Junio</label>
+                <label><input type="checkbox" value="julio"> Julio</label>
+                <label><input type="checkbox" value="agosto"> Agosto</label>
+                <label><input type="checkbox" value="septiembre"> Septiembre</label>
+                <label><input type="checkbox" value="octubre"> Octubre</label>
+                <label><input type="checkbox" value="noviembre"> Noviembre</label>
+                <label><input type="checkbox" value="diciembre"> Diciembre</label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <!-- Detalles del pago -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="payment-monto"><i class="fa-solid fa-money-bill"></i> Monto a Pagar *</label>
+            <input type="number" id="payment-monto" step="0.01" required>
+            <small id="payment-monto-hint"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="payment-fecha"><i class="fa-solid fa-calendar-days"></i> Fecha de Pago *</label>
+            <input type="date" id="payment-fecha" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="payment-metodo"><i class="fa-solid fa-credit-card"></i> Método de Pago *</label>
+            <select id="payment-metodo" required>
+              <option value="">Seleccionar...</option>
+              <option value="efectivo">Efectivo</option>
+              <option value="transferencia">Transferencia</option>
+              <option value="daviplata">Daviplata</option>
+              <option value="nequi">Nequi</option>
+              <option value="tarjeta">Tarjeta</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="payment-concepto"><i class="fa-solid fa-comment-dots"></i> Concepto / Notas</label>
+          <textarea id="payment-concepto" rows="3"
+            placeholder="Ej: Pago mensualidad enero, Abono parcial, etc."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="payment-btn-cancel">Cancelar</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-check"></i> Registrar Pago
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

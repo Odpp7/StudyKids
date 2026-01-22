@@ -8,6 +8,10 @@ contextBridge.exposeInMainWorld('api', {
     obtenerEstudiantePorId: (id) => ipcRenderer.invoke('estudiante:obtenerPorId', id),
     actualizarEstudiante: (id, estudiante) => ipcRenderer.invoke('estudiante:actualizar', {id, estudiante}),
     eliminarEstudiante: (id) => ipcRenderer.invoke('estudiante:eliminar', id),
-});
 
-console.log('✅ Preload cargado correctamente');
+    // Pagos
+    listarEstudiantesParaPagos: (turno) => ipcRenderer.invoke('pago:listar', turno),
+    listarPagosPorMes: (turno, mes, anio) => ipcRenderer.invoke('pago:listarPorMes', { turno, mes, anio }),
+    registrarPago: (data) => ipcRenderer.invoke('pago:registrar', data),
+    
+});

@@ -230,7 +230,4 @@ async function cargarEstudiantes(turno) {
 
 // ===================== INICIALIZACIÓN =====================
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('📚 Inicializando módulo de estudiantes...');
-    changeTurn('manana');
-});
+changeTurn('manana');

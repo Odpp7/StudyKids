@@ -32,23 +32,41 @@ db.exec(`
     FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id) ON DELETE CASCADE
   );
 
+  -- HISTORIAL COMPLETO DE MOVIMIENTOS (AGREGADA COLUMNA MES Y ANIO)
   CREATE TABLE IF NOT EXISTS pagos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     estudiante_id INTEGER NOT NULL,
-    mes INTEGER NOT NULL CHECK(mes BETWEEN 1 AND 12),
+    tipo_pago TEXT NOT NULL CHECK(tipo_pago IN ('abono', 'pago-mes', 'adelantado')),
+    mes TEXT NOT NULL,
     anio INTEGER NOT NULL,
     monto REAL NOT NULL,
-    fecha_pago DATE,
-    metodo_pago TEXT,
-    referencia TEXT,
-    estado TEXT DEFAULT 'pendiente',
-    monto_pagado REAL DEFAULT 0,
-    notas TEXT,
-    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    fecha_actualizacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id),
-    UNIQUE(estudiante_id, mes, anio)
+    fecha_pago DATE NOT NULL,
+    metodo_pago TEXT NOT NULL CHECK(metodo_pago IN ('efectivo', 'transferencia', 'daviplata', 'nequi', 'tarjeta')),
+    concepto TEXT,
+    estado TEXT DEFAULT 'registrado' CHECK(estado IN ('registrado', 'anulado', 'completado', 'pendiente')),
+    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id) ON DELETE CASCADE
   );
+
+  -- ESTADO POR MES (LO QUE VE TU MAMÁ)
+  CREATE TABLE IF NOT EXISTS pagos_mensuales (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    estudiante_id INTEGER NOT NULL,
+    mes TEXT NOT NULL,
+    anio INTEGER NOT NULL,
+    total_mensual REAL NOT NULL,
+    total_pagado REAL NOT NULL DEFAULT 0,
+    estado TEXT NOT NULL CHECK(estado IN ('pendiente','abono','completado')),
+    ultimo_pago_id INTEGER,
+    fecha_actualizacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(estudiante_id, mes, anio),
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id) ON DELETE CASCADE,
+    FOREIGN KEY (ultimo_pago_id) REFERENCES pagos(id)
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_pagos_estudiante ON pagos(estudiante_id);
+  CREATE INDEX IF NOT EXISTS idx_pagos_fecha ON pagos(fecha_pago);
+  CREATE INDEX IF NOT EXISTS idx_pagos_mes_anio ON pagos(mes, anio);
 
   CREATE TABLE IF NOT EXISTS actividades (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -67,5 +85,3 @@ db.exec(`
     fecha_actualizacion DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 `);
-
-console.log('Tablas creadas correctamente');

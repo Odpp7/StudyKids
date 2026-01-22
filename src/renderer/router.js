@@ -17,10 +17,22 @@ function cargarPagina(nombre) {
 
 document.querySelectorAll('.nav-item').forEach(item => {
   item.onclick = () => {
-    document.querySelectorAll('.nav-item').forEach(navitem => navitem.classList.remove('active'));
+    const page = item.dataset.page;
+    localStorage.setItem('paginaActual', page);
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     item.classList.add('active');
-    cargarPagina(item.dataset.page);
+    cargarPagina(page);
   };
 });
 
-cargarPagina('estudiantes');
+const paginaGuardada = localStorage.getItem('paginaActual') || 'estudiantes';
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  if (item.dataset.page === paginaGuardada) {
+    item.classList.add('active');
+  } else {
+    item.classList.remove('active');
+  }
+});
+
+cargarPagina(paginaGuardada);

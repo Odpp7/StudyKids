@@ -1,5 +1,8 @@
 const { ipcMain } = require('electron');
 const estudiantesService = require('./services/estudianteService');
+const pagosService = require('./services/pagosService');
+
+// ===================== ESTUDIANTES =====================
 
 /* Guardar estudiante y acudiente */
 ipcMain.handle('estudiante:crear', (_, data) => {
@@ -29,4 +32,16 @@ ipcMain.handle('estudiante:actualizar', (_, {id, estudiante}) => {
 /* Eliminar estudiante */
 ipcMain.handle('estudiante:eliminar', (_, id) => {
     return estudiantesService.EliminarEstudiante(id);
+});
+
+
+
+// ===================== PAGOS =====================
+
+ipcMain.handle('pago:listarPorMes', (_, { turno, mes, anio }) => {
+    return pagosService.listarPagosPorMes(turno, mes, anio);
+});
+
+ipcMain.handle('pago:registrar', (_, data) => {
+    return pagosService.registrarPago(data);
 });

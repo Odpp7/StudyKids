@@ -65,8 +65,39 @@ pageContent.addEventListener('click', (e) => {
 
 
   /* ===================== PAGOS ===================== */
-  // (pendiente)
-  // if (e.target.closest('#btn-new-payment')) {}
+
+  // Cambiar jornada (vista tabla)
+  if (e.target.closest('.turn-btn-pagos')) {
+    const btn = e.target.closest('.turn-btn-pagos');
+    document.querySelectorAll('.turn-btn-pagos')
+      .forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    changeTurnPagos(btn.dataset.turn);
+  }
+
+  // Abrir modal de pago
+  if (e.target.closest('.btn-pay')) {
+    const btn = e.target.closest('.btn-pay');
+    const estudianteId = btn.dataset.estudiante;
+    openPaymentModal(estudianteId);
+  }
+
+  // Ver concepto/historial
+  if (e.target.closest('.btn-concept')) {
+    const btn = e.target.closest('.btn-concept');
+    const estudianteId = btn.dataset.estudiante;
+    // Aquí puedes abrir un modal para ver el historial de pagos
+    alert('Función de historial en desarrollo para estudiante ID: ' + estudianteId);
+  }
+
+  // Cerrar modal de pago
+  if (
+    e.target.closest('#payment-modal-close') ||
+    e.target.closest('#payment-btn-cancel') ||
+    e.target.id === 'payment-modal'
+  ) {
+    closePaymentModal();
+  }
 
   /* ===================== PADRES ===================== */
   // (pendiente)
@@ -91,7 +122,9 @@ pageContent.addEventListener('submit', (e) => {
   }
 
   /* ===================== PAGOS ===================== */
-  // (pendiente)
+  if (e.target.id === 'payment-form') {
+    registrarPago(e);
+  }
 
 });
 
@@ -103,6 +136,23 @@ pageContent.addEventListener('change', (e) => {
 
   /* ===================== ESTUDIANTES ===================== */
   // (pendiente)
+
+  /* ===================== PAGOS ===================== */
+  // Cambiar mes en el filtro de pagos
+  if (e.target.id === 'month-filter') {
+    const mesSeleccionado = e.target.value;
+    const turnoActivo = document.querySelector('.turn-btn-pagos.active');
+
+    if (turnoActivo && window.changeTurnPagos) {
+      const turno = turnoActivo.dataset.turn;
+      
+      if (window.mesActualPagos !== undefined) {
+        window.mesActualPagos = mesSeleccionado;
+      }
+      
+      changeTurnPagos(turno);
+    }
+  }
 
   /* ===================== REPORTES ===================== */
   // (pendiente)
@@ -117,6 +167,9 @@ pageContent.addEventListener('input', (e) => {
 
   /* ===================== ESTUDIANTES ===================== */
   // if (e.target.id === 'search-students') {}
+
+  /* ===================== PAGOS ===================== */
+  // (pendiente)
 
   /* ===================== PADRES ===================== */
   // (pendiente)
