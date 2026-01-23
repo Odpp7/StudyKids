@@ -1,6 +1,12 @@
+// ===================== VARIABLES GLOBALES =====================
+window.turnoActualPagos = 'manana';
+window.mesActualPagos = '';
+window.anioActualPagos = new Date().getFullYear();
 
 // ===================== JORNADAS =====================
 window.changeTurnPagos = function (turno) {
+    window.turnoActualPagos = turno;
+
     const tableManana = document.getElementById('payments-table-manana');
     const tableTarde = document.getElementById('payments-table-tarde');
 
@@ -9,11 +15,35 @@ window.changeTurnPagos = function (turno) {
     tableManana.style.display = turno === 'manana' ? 'table' : 'none';
     tableTarde.style.display = turno === 'tarde' ? 'table' : 'none';
 
-    cargarPagosPorMes(turno, mesActual, anioActual);
+    cargarPagosPorMes(turno, window.mesActualPagos, window.anioActualPagos);
+    cargarEstadisticas(turno, window.mesActualPagos, window.anioActualPagos);
 };
 
-// ===================== MODAL =====================
+// ===================== ESTADÍSTICAS =====================
+async function cargarEstadisticas(turno, mes, anio) {
+    try {
+        const stats = await window.api.obtenerEstadisticasPagos(turno, mes, anio);
 
+        // Actualizar los valores en el HTML
+        document.querySelector('.payment-card.total .payment-value').textContent =
+            `$${stats.totalEsperado.toLocaleString()}`;
+
+        document.querySelector('.payment-card.pending .payment-value').textContent =
+            stats.countPendientes;
+        document.querySelector('.payment-card.pending .payment-secondary').textContent =
+            `$${stats.totalPendiente.toLocaleString()} por recibir`;
+
+        document.querySelector('.payment-card.completed .payment-value').textContent =
+            stats.countCompletados;
+        document.querySelector('.payment-card.completed .payment-secondary').textContent =
+            `$${stats.totalRecibido.toLocaleString()} recibido`;
+
+    } catch (error) {
+        console.error('Error al cargar estadísticas:', error);
+    }
+}
+
+// ===================== MODAL =====================
 window.openPaymentModal = function (estudianteId) {
     document.getElementById('payment-form').reset();
     document.getElementById('payment-modal').style.display = 'flex';
@@ -44,51 +74,20 @@ async function cargarDatosEstudianteEnModal(estudianteId) {
     }
 }
 
-const monthFilter = document.getElementById('month-filter');
-if (monthFilter) {
-    monthFilter.addEventListener('change', function () {
-        mesActual = this.value;
-        cargarPagosPorMes(turnoActual, mesActual, anioActual);
-    });
-} else {
-    console.error(' No se encontró el selector de mes (month-filter)');
-}
-
-document.getElementById('payment-tipo').addEventListener('change', function () {
-    const tipo = this.value;
-    const mesContainer = document.getElementById('payment-mes-container');
-    const rangoContainer = document.getElementById('payment-rango-container');
-    const mesSelect = document.getElementById('payment-mes');
-    const fechaDesde = document.getElementById('payment-fecha-desde');
-    const fechaHasta = document.getElementById('payment-fecha-hasta');
-
-
-    if (tipo === 'adelantado') {
-        mesContainer.style.display = 'none';
-        rangoContainer.style.display = 'block';
-        mesSelect.removeAttribute('required');
-        fechaDesde.setAttribute('required', 'required');
-        fechaHasta.setAttribute('required', 'required');
-    } else {
-        mesContainer.style.display = 'block';
-        rangoContainer.style.display = 'none';
-    }
-});
-
 // ===================== INIT =====================
 initPagos();
 
 function initPagos() {
-
     const fecha = new Date();
     const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
         'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-    mesActual = meses[fecha.getMonth()];
-    anioActual = fecha.getFullYear();
+
+    window.mesActualPagos = meses[fecha.getMonth()];
+    window.anioActualPagos = fecha.getFullYear();
 
     const monthFilter = document.getElementById('month-filter');
     if (monthFilter) {
-        monthFilter.value = mesActual;
+        monthFilter.value = window.mesActualPagos;
     }
 
     setTurnoActivo('manana');
@@ -107,7 +106,7 @@ function setTurnoActivo(turno) {
     if (btn) btn.classList.add('active');
 }
 
-// ===================== DATOS =====================
+// ===================== LISTAR DATOS =====================
 async function cargarPagosPorMes(turno, mes, anio) {
     try {
         const pagos = await window.api.listarPagosPorMes(turno, mes, anio);
@@ -156,6 +155,9 @@ async function cargarPagosPorMes(turno, mes, anio) {
                         <i class="fa-solid fa-hand-holding-dollar"></i>
                     </button>
                     <button class="action-btn btn-concept" style="color: blue" data-estudiante="${pago.id}">
+                        <i class="fa-solid fa-book-open"></i>
+                    </button>
+                    <button class="action-btn btn-factura" style="color: black" data-estudiante="${pago.id}">
                         <i class="fa-solid fa-clipboard"></i>
                     </button>
                 </td>
@@ -167,6 +169,26 @@ async function cargarPagosPorMes(turno, mes, anio) {
         alert("error al cargar los pagos" + err.message);
     }
 }
+
+// ==================== BUSQUEDA ===========================
+
+window.BuscarPagosPorNombre = function (searchTerm) {
+    const turnoActivo = window.turnoActualPagos || 'manana';
+
+    const tbodyId = turnoActivo === 'manana' ? 'payments-tbody-manana' : 'payments-tbody-tarde';
+
+    const tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+
+    const rows = tbody.querySelectorAll('tr');
+    const searchLower = searchTerm.toLowerCase().trim();
+
+    rows.forEach(row => {
+        const nombre = row.querySelector('.student-info div:last-child')?.textContent.toLowerCase() || '';
+        row.style.display = nombre.includes(searchLower) ? '' : 'none';
+    });
+};
+
 
 // ===================== REGISTRAR PAGO =====================
 window.registrarPago = async function (e) {
@@ -249,10 +271,12 @@ window.registrarPago = async function (e) {
 
         alert('✅ Pago registrado exitosamente');
         closePaymentModal();
+
+        // Recargar datos Y estadísticas
         cargarPagosPorMes(window.turnoActualPagos, window.mesActualPagos, window.anioActualPagos);
+        cargarEstadisticas(window.turnoActualPagos, window.mesActualPagos, window.anioActualPagos);
 
     } catch (error) {
-        alert(' Error al registrar el pago: ' + error.message);
+        alert('❌ Error al registrar el pago: ' + error.message);
     }
 }
-

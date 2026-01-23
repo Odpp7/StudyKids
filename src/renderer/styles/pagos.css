@@ -57,11 +57,19 @@
   margin-bottom: 30px;
 }
 
+.payment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
 .payment-card {
   background: white;
   padding: 25px;
   border-radius: 16px;
   display: flex;
+  flex-direction: row;
   gap: 20px;
   align-items: center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -105,6 +113,14 @@
 .payment-label {
   font-size: 14px;
   color: #718096;
+  font-weight: 500;
+}
+
+.payment-secondary {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4a5568;
+  margin-top: 4px;
 }
 
 /* ==========================================
@@ -209,44 +225,6 @@ tbody tr:hover {
 }
 
 /* ==========================================
-   PAYMENT SUMMARY
-========================================== */
-.payment-summary {
-  background: white;
-  border-radius: 16px;
-  padding: 30px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  margin-top: 30px;
-}
-
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
-}
-
-.summary-item {
-  background: #f7fafc;
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-}
-
-.summary-label {
-  font-size: 13px;
-  color: #718096;
-}
-
-.summary-value {
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.text-success { color: #059669; }
-.text-warning { color: #d97706; }
-.text-danger  { color: #dc2626; }
-
-/* ==========================================
    MODAL CONTENT
 ========================================== */
 .modal-large {
@@ -278,7 +256,6 @@ tbody tr:hover {
 .months-grid input {
   margin-right: 6px;
 }
-
 
 /* ==========================================
    MODAL STUDENT INFO
@@ -355,3 +332,7 @@ tbody tr:hover {
   background: #e2e8f0;
   color: #4a5568;
 }
+
+.text-success { color: #059669; }
+.text-warning { color: #d97706; }
+.text-danger  { color: #dc2626; }

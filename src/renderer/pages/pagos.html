@@ -29,8 +29,8 @@
     <div class="payment-card total">
       <div class="payment-icon"><i class="fa-solid fa-sack-dollar"></i></div>
       <div class="payment-info">
-        <div class="payment-value">$2,450</div>
-        <div class="payment-label">Ingresos del Mes</div>
+        <div class="payment-value">$2,400</div>
+        <div class="payment-label">Esperado del Mes</div>
       </div>
     </div>
     <div class="payment-card pending">
@@ -38,6 +38,7 @@
       <div class="payment-info">
         <div class="payment-value">3</div>
         <div class="payment-label">Pagos Pendientes</div>
+        <div class="payment-secondary text-danger">$150 por recibir</div>
       </div>
     </div>
     <div class="payment-card completed">
@@ -45,6 +46,7 @@
       <div class="payment-info">
         <div class="payment-value">45</div>
         <div class="payment-label">Pagos Completados</div>
+        <div class="payment-secondary text-success">$2,250 recibido</div>
       </div>
     </div>
   </div>
@@ -107,33 +109,7 @@
       </tbody>
     </table>
   </div>
-
-  <!-- Payment Summary -->
-  <div class="payment-summary">
-    <h3>📊 Resumen Mensual</h3>
-    <div class="summary-grid">
-      <div class="summary-item">
-        <span class="summary-label">Esperado</span>
-        <span class="summary-value">$2,400</span>
-      </div>
-      <div class="summary-item">
-        <span class="summary-label">Recibido</span>
-        <span class="summary-value text-success">$2,250</span>
-      </div>
-      <div class="summary-item">
-        <span class="summary-label">Pendiente</span>
-        <span class="summary-value text-warning">$150</span>
-      </div>
-      <div class="summary-item">
-        <span class="summary-label">Efectividad</span>
-        <span class="summary-value text-success">93.7%</span>
-      </div>
-    </div>
-  </div>
 </div>
-
-
-
 
 <!-- Modal de Registro de Pago -->
 <div id="payment-modal" class="modal" style="display: none;">
@@ -146,7 +122,6 @@
     <div class="modal-body">
       <form id="payment-form">
         <input type="hidden" id="payment-estudiante-id">
-
 
         <div class="student-payment-info">
           <h3 id="payment-student-name"></h3>

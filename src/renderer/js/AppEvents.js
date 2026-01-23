@@ -41,7 +41,7 @@ pageContent.addEventListener('click', (e) => {
   if (e.target.closest('.btn-edit')) {
     const btn = e.target.closest('.btn-edit');
     const id = Number(btn.dataset.id);
-    
+
     document.getElementById('modal-title').textContent = 'Editar Estudiante';
     document.getElementById('student-modal').style.display = 'flex';
     openEditModal(id);
@@ -99,6 +99,26 @@ pageContent.addEventListener('click', (e) => {
     closePaymentModal();
   }
 
+  // Generar factura
+  if (e.target.closest('.btn-factura')) {
+    const btn = e.target.closest('.btn-factura');
+    const estudianteId = btn.dataset.estudiante;
+
+    // Obtener mes y año actuales del filtro
+    const mesActual = document.getElementById('month-filter').value;
+    const anioActual = new Date().getFullYear();
+
+    window.api.generarFactura(Number(estudianteId), mesActual, anioActual)
+      .then(resultado => {
+        if (resultado.success) {
+          alert(`✅ Factura generada exitosamente\n\nArchivo: ${resultado.nombreArchivo}\n\nGuardada en: Documentos/StudyKids/Facturas/`);
+        }
+      })
+      .catch(error => {
+        alert('❌ Error al generar factura: ' + error.message);
+      });
+  }
+
   /* ===================== PADRES ===================== */
   // (pendiente)
 
@@ -141,16 +161,37 @@ pageContent.addEventListener('change', (e) => {
   // Cambiar mes en el filtro de pagos
   if (e.target.id === 'month-filter') {
     const mesSeleccionado = e.target.value;
-    const turnoActivo = document.querySelector('.turn-btn-pagos.active');
 
-    if (turnoActivo && window.changeTurnPagos) {
-      const turno = turnoActivo.dataset.turn;
-      
-      if (window.mesActualPagos !== undefined) {
-        window.mesActualPagos = mesSeleccionado;
-      }
-      
-      changeTurnPagos(turno);
+    // Actualizar variable global
+    window.mesActualPagos = mesSeleccionado;
+
+    // Recargar tabla Y estadísticas
+    if (window.changeTurnPagos && window.turnoActualPagos) {
+      window.changeTurnPagos(window.turnoActualPagos);
+    }
+  }
+
+  // Cambiar tipo de pago en el modal
+  if (e.target.id === 'payment-tipo') {
+    const tipo = e.target.value;
+    const mesContainer = document.getElementById('payment-mes-container');
+    const rangoContainer = document.getElementById('payment-rango-container');
+    const mesSelect = document.getElementById('payment-mes');
+    const fechaDesde = document.getElementById('payment-fecha-desde');
+    const fechaHasta = document.getElementById('payment-fecha-hasta');
+
+    if (tipo === 'adelantado') {
+      if (mesContainer) mesContainer.style.display = 'none';
+      if (rangoContainer) rangoContainer.style.display = 'block';
+      if (mesSelect) mesSelect.removeAttribute('required');
+      if (fechaDesde) fechaDesde.setAttribute('required', 'required');
+      if (fechaHasta) fechaHasta.setAttribute('required', 'required');
+    } else {
+      if (mesContainer) mesContainer.style.display = 'block';
+      if (rangoContainer) rangoContainer.style.display = 'none';
+      if (mesSelect) mesSelect.setAttribute('required', 'required');
+      if (fechaDesde) fechaDesde.removeAttribute('required');
+      if (fechaHasta) fechaHasta.removeAttribute('required');
     }
   }
 
@@ -166,10 +207,16 @@ pageContent.addEventListener('change', (e) => {
 pageContent.addEventListener('input', (e) => {
 
   /* ===================== ESTUDIANTES ===================== */
-  // if (e.target.id === 'search-students') {}
+
+  if (e.target.id === 'search-students') {
+    BuscarEstudiantesPorNombre(e.target.value);
+  }
 
   /* ===================== PAGOS ===================== */
-  // (pendiente)
+
+  if (e.target.id === 'search-payments') {
+    BuscarPagosPorNombre(e.target.value);
+  }
 
   /* ===================== PADRES ===================== */
   // (pendiente)

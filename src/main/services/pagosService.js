@@ -46,9 +46,57 @@ function listarPagosPorMes(turno, mes, anio) {
         };
     });
 
-    return resultado
+    return resultado;
 }
 
+function obtenerEstadisticasPorMes(turno, mes, anio) {
+    // Obtener todos los estudiantes activos del turno
+    const estudiantes = db.prepare(`
+        SELECT id, mensualidad 
+        FROM estudiantes 
+        WHERE turno = ? AND activo = 1
+    `).all(turno);
+
+    let totalEsperado = 0;
+    let totalRecibido = 0;
+    let countCompletados = 0;
+    let countPendientes = 0;
+    let countAbonos = 0;
+
+    estudiantes.forEach(est => {
+        totalEsperado += est.mensualidad;
+
+        const pagoMensual = db.prepare(`
+            SELECT total_pagado, estado 
+            FROM pagos_mensuales
+            WHERE estudiante_id = ? AND mes = ? AND anio = ?
+        `).get(est.id, mes, anio);
+
+        if (pagoMensual) {
+            totalRecibido += pagoMensual.total_pagado;
+
+            if (pagoMensual.estado === 'completado') {
+                countCompletados++;
+            } else if (pagoMensual.estado === 'abono') {
+                countAbonos++;
+                countPendientes++;
+            } else {
+                countPendientes++;
+            }
+        } else {
+            countPendientes++;
+        }
+    });
+
+    return {
+        totalEsperado,
+        totalRecibido,
+        totalPendiente: totalEsperado - totalRecibido,
+        countCompletados,
+        countPendientes,
+        countAbonos
+    };
+}
 
 function registrarPago(data) {
     const { estudiante_id, tipo_pago, mes, monto, fecha_pago, metodo_pago, concepto } = data;
@@ -119,9 +167,7 @@ function registrarPago(data) {
         WHERE id = ?
     `).run(nuevoTotal, estadoMensual, pago.lastInsertRowid, mensual.id);
 
-    return { ok: true, pago_id: pago.lastInsertRowid,estado: estadoMensual};
+    return { ok: true, pago_id: pago.lastInsertRowid, estado: estadoMensual };
 }
 
-
-
-module.exports = { listarPagosPorMes, registrarPago};
+module.exports = { listarPagosPorMes, obtenerEstadisticasPorMes, registrarPago };

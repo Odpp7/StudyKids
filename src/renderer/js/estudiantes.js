@@ -164,6 +164,26 @@ async function cargarEstadisticas(turno) {
     }
 }
 
+
+// ==================== BUSQUEDA ===========================
+
+window.BuscarEstudiantesPorNombre = function (searchTerm) {
+    const turnoActivo = document.querySelector('.turn-btn.active')?.dataset.turn || 'manana';
+
+    const tbodyId = turnoActivo === 'manana' ? 'students-tbody-manana' : 'students-tbody-tarde';
+
+    const tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+
+    const rows = tbody.querySelectorAll('tr');
+    const searchLower = searchTerm.toLowerCase().trim();
+
+    rows.forEach(row => {
+        const nombre = row.querySelector('.student-info div div')?.textContent.toLowerCase() || '';
+        row.style.display = nombre.includes(searchLower) ? '' : 'none';
+    });
+};
+
 // ===================== LISTAR =====================
 
 async function cargarEstudiantes(turno) {
