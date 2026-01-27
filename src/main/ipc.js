@@ -44,6 +44,12 @@ ipcMain.handle('obtener-estadisticas-pagos', (_, turno, mes, anio) => {
     return pagosService.obtenerEstadisticasPorMes(turno, mes, anio);
 });
 
+ipcMain.handle('obtener-historial-pagos',(_,estudianteId, mes, anio) => {
+    return pagosService.obtenerHistorialPagos(estudianteId, mes, anio);
+});
+
+// ===================== PAGOS =====================
+
 ipcMain.handle('factura:generar', (_,{estudianteId, mes, anio}) => {
     return facturaService.generarFacturaPago(estudianteId, mes, anio);
 });

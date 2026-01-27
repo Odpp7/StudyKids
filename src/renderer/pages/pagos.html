@@ -237,3 +237,54 @@
     </div>
   </div>
 </div>
+
+<!-- Modal de Historial de Conceptos -->
+<div id="historial-modal" class="modal" style="display: none;">
+  <div class="modal-content modal-large">
+    <div class="modal-header">
+      <h2><i class="fa-solid fa-book-open"></i> Historial de Pagos</h2>
+      <button class="modal-close" id="historial-modal-close">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Info del estudiante -->
+      <div class="student-payment-info">
+        <h3 id="historial-student-name"></h3>
+        <p>Mes: <strong id="historial-mes"></strong> - <strong id="historial-anio"></strong></p>
+        <p>Mensualidad: <strong id="historial-mensualidad"></strong></p>
+        <p>Total Pagado: <strong id="historial-total-pagado" class="text-success"></strong></p>
+        <p id="historial-pendiente-container">
+          Pendiente: <strong id="historial-pendiente"></strong>
+        </p>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <!-- Tabla de historial -->
+      <div class="table-container">
+        <h4 style="margin-bottom: 1rem;">
+          <i class="fa-solid fa-list"></i> Detalle de Pagos Realizados
+        </h4>
+        <table id="historial-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Fecha</th>
+              <th>Monto</th>
+              <th>Método</th>
+              <th>Tipo</th>
+              <th>Concepto</th>
+            </tr>
+          </thead>
+          <tbody id="historial-tbody">
+            <!-- Se llenará dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="historial-btn-close">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -68,7 +68,6 @@
           <th>Acudiente</th>
           <th>Grado</th>
           <th>Mensualidad</th>
-          <th>Estado Pago</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -87,7 +86,6 @@
           <th>Acudiente</th>
           <th>Grado</th>
           <th>Mensualidad</th>
-          <th>Estado Pago</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -242,14 +240,7 @@
             <label>Fecha de Inicio *</label>
             <input type="date" id="student-start-date" required>
           </div>
-          
-          <div class="form-group full-width">
-            <label>Estado de Pago</label>
-            <select id="payment-status">
-              <option value="al-dia">Al día</option>
-              <option value="pendiente">Pendiente</option>
-            </select>
-          </div>
+        
         </div>
       </div>
 
@@ -271,5 +262,130 @@
         </button>
       </div>
     </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- MODAL VER ESTUDIANTE -->
+<div id="view-student-modal" class="modal-overlay">
+  <div class="modal-content-estudiantes">
+    <div class="modal-header">
+      <h2><i class="fa-solid fa-user-circle"></i> Información del Estudiante</h2>
+      <button class="modal-close" id="view-modal-close">✕</button>
+    </div>
+    
+    <div class="view-modal-body">
+      <!-- Header con Avatar y Nombre -->
+      <div class="view-student-header">
+        <div class="view-student-avatar" id="view-avatar"></div>
+        <div class="view-student-main-info">
+          <h3 id="view-student-name"></h3>
+          <p id="view-student-grade-turno"></p>
+        </div>
+      </div>
+
+      <!-- Grid de Información -->
+      <div class="view-info-grid">
+        
+        <!-- Información Personal -->
+        <div class="view-info-section">
+          <h4><i class="fa-solid fa-user"></i> Información Personal</h4>
+          <div class="view-info-item">
+            <span class="view-label">Fecha de Nacimiento:</span>
+            <span class="view-value" id="view-birthdate">-</span>
+          </div>
+          <div class="view-info-item">
+            <span class="view-label">Edad:</span>
+            <span class="view-value" id="view-age">-</span>
+          </div>
+          <div class="view-info-item">
+            <span class="view-label">Dirección:</span>
+            <span class="view-value" id="view-address">-</span>
+          </div>
+          <div class="view-info-item">
+            <span class="view-label">Fecha de Inicio:</span>
+            <span class="view-value" id="view-start-date">-</span>
+          </div>
+        </div>
+
+        <!-- Información Académica -->
+        <div class="view-info-section" id="view-academic-info">
+          <h4><i class="fa-brands fa-google-scholar"></i> Información Académica</h4>
+          <div class="view-info-item">
+            <span class="view-label">Colegio:</span>
+            <span class="view-value" id="view-school">-</span>
+          </div>
+          <div class="view-info-item">
+            <span class="view-label">Grado:</span>
+            <span class="view-value" id="view-grade">-</span>
+          </div>
+        </div>
+
+        <!-- Información del Acudiente -->
+        <div class="view-info-section">
+          <h4><i class="fa-solid fa-people-group"></i> Acudiente Principal</h4>
+          <div class="view-info-item">
+            <span class="view-label">Nombre:</span>
+            <span class="view-value" id="view-parent-name">-</span>
+          </div>
+          <div class="view-info-item">
+            <span class="view-label">Relación:</span>
+            <span class="view-value" id="view-parent-relation">-</span>
+          </div>
+          <div class="view-info-item">
+            <span class="view-label">Teléfono:</span>
+            <span class="view-value" id="view-parent-phone">-</span>
+          </div>
+          <div class="view-info-item">
+            <span class="view-label">Email:</span>
+            <span class="view-value" id="view-parent-email">-</span>
+          </div>
+        </div>
+
+        <!-- Información de Pago -->
+        <div class="view-info-section">
+          <h4><i class="fa-solid fa-sack-dollar"></i> Información de Pago</h4>
+          <div class="view-info-item">
+            <span class="view-label">Mensualidad:</span>
+            <span class="view-value view-highlight" id="view-fee">$0</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Observaciones -->
+      <div class="view-info-section full-width" id="view-notes-section">
+        <h4><i class="fa-solid fa-note-sticky"></i> Observaciones</h4>
+        <div class="view-observations">
+          <p id="view-notes">Sin observaciones</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- MODAL CONFIMAR BORRAR -->
+<div id="confirm-modal" class="modal-overlay">
+  <div class="modal-content-estudiantes" style="max-width:400px">
+    <div class="modal-header">
+      <h2>Confirmar</h2>
+      <button class="modal-close" id="confirm-cancel">✕</button>
+    </div>
+
+    <div style="padding: 20px; font-size:15px">
+      ¿Eliminar este estudiante?
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-secondary" id="confirm-no">Cancelar</button>
+      <button class="btn-danger" id="confirm-yes">Eliminar</button>
+    </div>
   </div>
 </div>

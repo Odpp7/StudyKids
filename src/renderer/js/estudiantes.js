@@ -1,19 +1,34 @@
-console.log('Estudiantes cargado (versión limpia)');
-
 // ===================== MODAL =====================
 
 window.openStudentModal = function () {
-    document.getElementById('student-form').reset();
-    document.getElementById('student-modal').style.display = 'flex';
-    document.getElementById('modal-title').textContent = 'Nuevo Estudiante';
-}
+    const modal = document.getElementById('student-modal');
+    const form = document.getElementById('student-form');
+
+    document.activeElement?.blur();
+
+    form.reset();
+    delete form.dataset.editingId;
+
+    modal.classList.add('active');
+    document.getElementById('modal-title').innerHTML = '<i class="fa-solid fa-plus"></i> Nuevo Estudiante';
+};
+
 
 window.closeStudentModal = function () {
+    const modal = document.getElementById('student-modal');
     const form = document.getElementById('student-form');
+
+    document.activeElement?.blur();
+
     form.reset();
-    delete form.dataset.editingId; 
-    document.getElementById('student-modal').style.display = 'none';
+    delete form.dataset.editingId;
+
+    const btn = form.querySelector('button[type="submit"]');
+    if (btn) btn.disabled = false;
+
+    modal.classList.remove('active');
 };
+
 
 window.openEditModal = async function (id) {
     try {
@@ -30,7 +45,6 @@ window.openEditModal = async function (id) {
         document.getElementById('student-address').value = estudiante.direccion || '';
         document.getElementById('student-fee').value = estudiante.mensualidad || '';
         document.getElementById('student-start-date').value = estudiante.fecha_inicio || '';
-        document.getElementById('payment-status').value = estudiante.estado_pago || 'al-dia';
         document.getElementById('student-notes').value = estudiante.observacion || '';
 
         const radioTurno = document.querySelector(`input[name="turno"][value="${estudiante.turno}"]`);
@@ -114,7 +128,6 @@ window.saveStudent = async function (e) {
             grado: turno === 'tarde' ? document.getElementById('student-grade-tarde').value : document.getElementById('student-grade-manana').value,
             mensualidad: document.getElementById('student-fee').value,
             fecha_inicio: document.getElementById('student-start-date').value,
-            estado_pago: document.getElementById('payment-status').value,
             observacion: document.getElementById('student-notes').value || null
         };
 
@@ -122,7 +135,6 @@ window.saveStudent = async function (e) {
 
         if (editingId) {
             await window.api.actualizarEstudiante(Number(editingId), estudiante);
-            alert('Estudiante actualizado correctamente');
             delete e.target.dataset.editingId;
         } else {
             const acudiente = {
@@ -133,7 +145,6 @@ window.saveStudent = async function (e) {
             };
 
             await window.api.crearEstudiante({ estudiante, acudiente });
-            alert('Estudiante guardado correctamente');
         }
         
         const turnoActual = document.querySelector('.turn-btn.active').dataset.turn;
@@ -144,7 +155,6 @@ window.saveStudent = async function (e) {
 
     } catch (err) {
         console.error(err);
-        alert('Error al guardar estudiante');
     } finally {
         btn.disabled = false;
     }
@@ -216,14 +226,6 @@ async function cargarEstudiantes(turno) {
         <td>${est.grado}</td>
         <td>$${est.mensualidad}</td>
         <td>
-          <span class="status-badge ${est.estado_pago === 'pendiente'
-                    ? 'status-pending'
-                    : 'status-active'
-                }">
-            ${est.estado_pago === 'pendiente' ? 'Pendiente' : 'Al día'}
-          </span>
-        </td>
-        <td>
           <div class="action-buttons">
             <button class="action-btn btn-view" data-id="${est.id}">
               <i class="fa-solid fa-eye"></i>
@@ -241,12 +243,103 @@ async function cargarEstudiantes(turno) {
             tbody.appendChild(tr);
         });
 
-        console.log(`✅ ${estudiantes.length} estudiantes cargados`);
-
     } catch (error) {
         console.error('Error cargando estudiantes:', error);
     }
 }
+
+
+// ===================== MODAL VER ESTUDIANTE =====================
+
+window.openViewModal = async function (id) {
+    try {
+        const estudiante = await window.api.obtenerEstudiantePorId(id);
+        
+        if (!estudiante) {
+            alert('Estudiante no encontrado');
+            return;
+        }
+
+        const modal = document.getElementById('view-student-modal');
+        modal.dataset.studentId = id;
+
+        // Avatar
+        const iniciales = estudiante.nombre
+            .split(' ')
+            .map(n => n[0])
+            .join('')
+            .substring(0, 2)
+            .toUpperCase();
+        document.getElementById('view-avatar').textContent = iniciales;
+
+        // Header
+        document.getElementById('view-student-name').textContent = estudiante.nombre;
+        
+        const turnoTexto = estudiante.turno === 'manana' ? 'Jornada Mañana' : 'Jornada Tarde';
+        document.getElementById('view-student-grade-turno').textContent = 
+            `${estudiante.grado} - ${turnoTexto}`;
+
+        // Información Personal
+        document.getElementById('view-birthdate').textContent = 
+            estudiante.fecha_nacimiento || '-';
+        document.getElementById('view-age').textContent = 
+            estudiante.edad ? `${estudiante.edad} años` : '-';
+        document.getElementById('view-address').textContent = 
+            estudiante.direccion || 'No especificada';
+        document.getElementById('view-start-date').textContent = 
+            estudiante.fecha_inicio || '-';
+
+        // Información Académica (solo para turno tarde)
+        const academicSection = document.getElementById('view-academic-info');
+        if (estudiante.turno === 'tarde' && estudiante.colegio) {
+            academicSection.classList.remove('hidden');
+            document.getElementById('view-school').textContent = estudiante.colegio;
+            document.getElementById('view-grade').textContent = estudiante.grado;
+        } else {
+            academicSection.classList.add('hidden');
+        }
+
+        // Acudiente
+        document.getElementById('view-parent-name').textContent = 
+            estudiante.acudiente_nombre || 'No registrado';
+        document.getElementById('view-parent-relation').textContent = 
+            estudiante.acudiente_relacion || '-';
+        document.getElementById('view-parent-phone').textContent = 
+            estudiante.acudiente_telefono || '-';
+        document.getElementById('view-parent-email').textContent = 
+            estudiante.acudiente_email || 'No registrado';
+
+        // Información de Pago
+        document.getElementById('view-fee').textContent = 
+            `$${Number(estudiante.mensualidad).toLocaleString('es-CO')}`;
+
+        // Observaciones
+        const notesSection = document.getElementById('view-notes-section');
+        const notesElement = document.getElementById('view-notes');
+        if (estudiante.observacion && estudiante.observacion.trim() !== '') {
+            notesElement.textContent = estudiante.observacion;
+            notesSection.style.display = 'block';
+        } else {
+            notesElement.textContent = 'Sin observaciones registradas';
+            notesSection.style.display = 'block';
+        }
+
+        // Mostrar modal
+        modal.classList.add('active');
+
+    } catch (error) {
+        console.error('Error cargando información del estudiante:', error);
+        alert('Error al cargar la información del estudiante');
+    }
+};
+
+window.closeViewModal = function () {
+    const modal = document.getElementById('view-student-modal');
+    document.activeElement?.blur();
+    modal.classList.remove('active');
+    delete modal.dataset.studentId;
+};
+
 
 // ===================== INICIALIZACIÓN =====================
 

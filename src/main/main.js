@@ -1,4 +1,3 @@
-require('electron-reloader')(module);
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 

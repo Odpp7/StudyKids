@@ -2,6 +2,9 @@ console.log('AppEvents cargado (estructura limpia)');
 
 const pageContent = document.getElementById('page-content');
 
+// Variable global para guardar ID a eliminar
+let estudianteIdAEliminar = null;
+
 /* ======================================================
    CLICK EVENTS
 ====================================================== */
@@ -23,6 +26,21 @@ pageContent.addEventListener('click', (e) => {
     closeStudentModal();
   }
 
+  // Ver info detallada estudiante
+  if (e.target.closest('.btn-view')) {
+    const btn = e.target.closest('.btn-view');
+    const id = Number(btn.dataset.id);
+    openViewModal(id);
+  }
+
+  // Cerrar modal info detallada
+  if (
+    e.target.closest('#view-modal-close') ||
+    e.target.id === 'view-student-modal'
+  ) {
+    closeViewModal();
+  }
+
   // Cambiar jornada (vista tabla)
   if (e.target.closest('.turn-btn')) {
     const btn = e.target.closest('.turn-btn');
@@ -37,28 +55,52 @@ pageContent.addEventListener('click', (e) => {
     changeFormTurn(e.target.value);
   }
 
-  // Editar estudiante
+  // Abrir modal editar
   if (e.target.closest('.btn-edit')) {
     const btn = e.target.closest('.btn-edit');
     const id = Number(btn.dataset.id);
 
-    document.getElementById('modal-title').textContent = 'Editar Estudiante';
-    document.getElementById('student-modal').style.display = 'flex';
+    // Primero abrir el modal
+    const modal = document.getElementById('student-modal');
+    modal.classList.add('active');
+
+    // Luego cambiar título y cargar datos
+    document.getElementById('modal-title').innerHTML = '<i class="fa-solid fa-pencil"></i> Editar Estudiante';
     openEditModal(id);
   }
 
-  // Eliminar estudiante
+
+  // ✅ ELIMINAR ESTUDIANTE - Abrir modal de confirmación
   if (e.target.closest('.btn-delete')) {
     const btn = e.target.closest('.btn-delete');
-    const id = btn.dataset.id;
+    estudianteIdAEliminar = btn.dataset.id;
+    
+    // Abrir modal de confirmación
+    document.getElementById('confirm-modal').classList.add('active');
+  }
 
-    if (confirm('¿Eliminar este estudiante?')) {
-      window.api.eliminarEstudiante(Number(id))
+  // Cerrar modal de confirmación
+  if (
+    e.target.closest('#confirm-cancel') ||
+    e.target.closest('#confirm-no') ||
+    e.target.id === 'confirm-modal'
+  ) {
+    document.getElementById('confirm-modal').classList.remove('active');
+    estudianteIdAEliminar = null;
+  }
+
+  // Confirmar eliminación
+  if (e.target.closest('#confirm-yes')) {
+    if (estudianteIdAEliminar) {
+      window.api.eliminarEstudiante(Number(estudianteIdAEliminar))
         .then(() => {
-          alert('Estudiante eliminado');
-          changeTurn(
-            document.querySelector('.turn-btn.active').dataset.turn
-          );
+          changeTurn(document.querySelector('.turn-btn.active').dataset.turn);
+          document.getElementById('confirm-modal').classList.remove('active');
+          estudianteIdAEliminar = null;
+        })
+        .catch((error) => {
+          document.getElementById('confirm-modal').classList.remove('active');
+          estudianteIdAEliminar = null;
         });
     }
   }
@@ -82,12 +124,11 @@ pageContent.addEventListener('click', (e) => {
     openPaymentModal(estudianteId);
   }
 
-  // Ver concepto/historial
+  // ✅ Ver concepto/historial - ACTUALIZADO
   if (e.target.closest('.btn-concept')) {
     const btn = e.target.closest('.btn-concept');
     const estudianteId = btn.dataset.estudiante;
-    // Aquí puedes abrir un modal para ver el historial de pagos
-    alert('Función de historial en desarrollo para estudiante ID: ' + estudianteId);
+    openHistorialModal(Number(estudianteId));
   }
 
   // Cerrar modal de pago
@@ -99,12 +140,20 @@ pageContent.addEventListener('click', (e) => {
     closePaymentModal();
   }
 
+  // ✅ Cerrar modal de historial
+  if (
+    e.target.closest('#historial-modal-close') ||
+    e.target.closest('#historial-btn-close') ||
+    e.target.id === 'historial-modal'
+  ) {
+    closeHistorialModal();
+  }
+
   // Generar factura
   if (e.target.closest('.btn-factura')) {
     const btn = e.target.closest('.btn-factura');
     const estudianteId = btn.dataset.estudiante;
 
-    // Obtener mes y año actuales del filtro
     const mesActual = document.getElementById('month-filter').value;
     const anioActual = new Date().getFullYear();
 

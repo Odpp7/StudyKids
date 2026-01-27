@@ -444,3 +444,198 @@ tbody tr:hover {
   border-color: #cbd5e0;
   background: #f7fafc;
 }
+
+
+
+
+
+
+
+/* ===================== MODAL VER ESTUDIANTE ===================== */
+
+.view-modal-body {
+  padding: 24px 32px;
+}
+
+.view-student-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+   padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-radius: 12px 12px 0 0;
+  margin: -24px -24px 24px -24px;
+}
+
+.view-student-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.view-student-main-info {
+  color: white;
+  flex: 1;
+}
+
+.view-student-main-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.view-student-main-info p {
+  margin: 0 0 12px 0;
+  opacity: 0.95;
+  font-size: 15px;
+}
+
+.view-student-main-info .status-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.view-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.view-info-section {
+  background: #f7fafc;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.view-info-section.full-width {
+  grid-column: 1 / -1;
+}
+
+.view-info-section h4 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3748;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.view-info-section h4 i {
+  color: #667eea;
+  font-size: 18px;
+}
+
+.view-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.view-info-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.view-label {
+  font-size: 14px;
+  color: #718096;
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-right: 12px;
+}
+
+.view-value {
+  font-size: 14px;
+  color: #2d3748;
+  font-weight: 600;
+  text-align: right;
+  flex: 1;
+}
+
+.view-value.view-highlight {
+  color: #667eea;
+  font-size: 18px;
+}
+
+.view-observations {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  min-height: 80px;
+}
+
+.view-observations p {
+  margin: 0;
+  color: #4a5568;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.view-modal-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 20px;
+}
+
+.view-modal-actions button {
+  flex: 1;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#view-academic-info.hidden {
+  display: none;
+}
+
+
+/* Modal de confirmación simple */
+#confirm-modal .btn-danger {
+  background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
+}
+
+#confirm-modal .btn-delete:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+}

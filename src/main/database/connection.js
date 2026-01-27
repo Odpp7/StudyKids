@@ -1,10 +1,22 @@
+const { app } = require('electron');
 const Database = require('better-sqlite3');
 const path = require('path');
+const fs = require('fs');
 
-const dbPath = path.join(__dirname, 'studykids.db');
+// Ruta segura del sistema
+const userDataPath = app.getPath('userData');
 
-const db = new Database(dbPath, {});
+// Asegurar que la carpeta exista
+if (!fs.existsSync(userDataPath)) {
+  fs.mkdirSync(userDataPath, { recursive: true });
+}
 
-console.log('Base de datos conectada');
+// Ruta final de la base de datos
+const dbPath = path.join(userDataPath, 'studykids.db');
+
+// Crear / abrir base de datos
+const db = new Database(dbPath);
+
+console.log('Base de datos conectada en:', dbPath);
 
 module.exports = db;

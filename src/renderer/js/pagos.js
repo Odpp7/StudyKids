@@ -43,7 +43,7 @@ async function cargarEstadisticas(turno, mes, anio) {
     }
 }
 
-// ===================== MODAL =====================
+// ===================== MODAL DE PAGO =====================
 window.openPaymentModal = function (estudianteId) {
     document.getElementById('payment-form').reset();
     document.getElementById('payment-modal').style.display = 'flex';
@@ -73,6 +73,94 @@ async function cargarDatosEstudianteEnModal(estudianteId) {
         alert('Error al cargar los datos del estudiante');
     }
 }
+
+// ===================== MODAL DE HISTORIAL =====================
+window.openHistorialModal = async function (estudianteId) {
+    const modal = document.getElementById('historial-modal');
+    modal.style.display = 'flex';
+
+    try {
+        // Usar las variables globales de mes y año actuales
+        const mes = window.mesActualPagos;
+        const anio = window.anioActualPagos;
+
+        const historial = await window.api.obtenerHistorialPagos(estudianteId, mes, anio);
+
+        // Llenar información del estudiante
+        document.getElementById('historial-student-name').textContent = historial.estudiante.nombre;
+        document.getElementById('historial-mes').textContent = mes.charAt(0).toUpperCase() + mes.slice(1);
+        document.getElementById('historial-anio').textContent = anio;
+        document.getElementById('historial-mensualidad').textContent = 
+            `$${historial.estudiante.mensualidad.toLocaleString()}`;
+        document.getElementById('historial-total-pagado').textContent = 
+            `$${historial.resumen.totalPagado.toLocaleString()}`;
+
+        // Mostrar pendiente
+        const pendienteContainer = document.getElementById('historial-pendiente-container');
+        const pendienteElement = document.getElementById('historial-pendiente');
+        
+        if (historial.resumen.pendiente > 0) {
+            pendienteContainer.style.display = 'block';
+            pendienteElement.textContent = `$${historial.resumen.pendiente.toLocaleString()}`;
+            pendienteElement.className = 'text-danger';
+        } else {
+            pendienteContainer.style.display = 'block';
+            pendienteElement.textContent = '$0 - Completado';
+            pendienteElement.className = 'text-success';
+        }
+
+        // Llenar tabla de historial
+        const tbody = document.getElementById('historial-tbody');
+        tbody.innerHTML = '';
+
+        if (historial.pagos.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 2rem; color: #999;">
+                        <i class="fa-solid fa-inbox"></i><br>
+                        No hay pagos registrados para este mes
+                    </td>
+                </tr>
+            `;
+        } else {
+            historial.pagos.forEach((pago, index) => {
+                const tipoPagoTexto = {
+                    'abono': 'Abono',
+                    'pago-mes': 'Pago Completo',
+                    'adelantado': 'Pago Adelantado'
+                };
+
+                const metodoPagoTexto = {
+                    'efectivo': 'Efectivo',
+                    'transferencia': 'Transferencia',
+                    'daviplata': 'Daviplata',
+                    'nequi': 'Nequi',
+                    'tarjeta': 'Tarjeta'
+                };
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${pago.fecha_pago}</td>
+                    <td><strong>$${pago.monto.toLocaleString()}</strong></td>
+                    <td>${metodoPagoTexto[pago.metodo_pago] || pago.metodo_pago}</td>
+                    <td>${tipoPagoTexto[pago.tipo_pago] || pago.tipo_pago}</td>
+                    <td>${pago.concepto || '-'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+    } catch (error) {
+        console.error('Error al cargar historial:', error);
+        alert('Error al cargar el historial de pagos: ' + error.message);
+        closeHistorialModal();
+    }
+}
+
+window.closeHistorialModal = function () {
+    document.getElementById('historial-modal').style.display = 'none';
+};
 
 // ===================== INIT =====================
 initPagos();
@@ -208,7 +296,6 @@ window.registrarPago = async function (e) {
     }
 
     if (!tipoPago || !monto || !fechaPago || !metodoPago) {
-        alert('Por favor completa todos los campos obligatorios');
         return;
     }
 
@@ -269,7 +356,6 @@ window.registrarPago = async function (e) {
             await window.api.registrarPago(data);
         }
 
-        alert('✅ Pago registrado exitosamente');
         closePaymentModal();
 
         // Recargar datos Y estadísticas

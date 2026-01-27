@@ -170,4 +170,64 @@ function registrarPago(data) {
     return { ok: true, pago_id: pago.lastInsertRowid, estado: estadoMensual };
 }
 
-module.exports = { listarPagosPorMes, obtenerEstadisticasPorMes, registrarPago };
+// ✅ NUEVA FUNCIÓN: Obtener historial de pagos de un estudiante en un mes específico
+function obtenerHistorialPagos(estudianteId, mes, anio) {
+    // Obtener datos del estudiante
+    const estudiante = db.prepare(`
+        SELECT nombre, mensualidad 
+        FROM estudiantes 
+        WHERE id = ?
+    `).get(estudianteId);
+
+    if (!estudiante) {
+        throw new Error('Estudiante no encontrado');
+    }
+
+    // Obtener estado mensual
+    const pagoMensual = db.prepare(`
+        SELECT total_pagado, estado, total_mensual
+        FROM pagos_mensuales
+        WHERE estudiante_id = ? AND mes = ? AND anio = ?
+    `).get(estudianteId, mes, anio);
+
+    // Obtener todos los pagos del mes
+    const pagos = db.prepare(`
+        SELECT 
+            id,
+            tipo_pago,
+            monto,
+            fecha_pago,
+            metodo_pago,
+            concepto,
+            fecha_registro
+        FROM pagos
+        WHERE estudiante_id = ? AND mes = ? AND anio = ?
+        ORDER BY fecha_registro ASC
+    `).all(estudianteId, mes, anio);
+
+    return {
+        estudiante: {
+            id: estudianteId,
+            nombre: estudiante.nombre,
+            mensualidad: estudiante.mensualidad
+        },
+        resumen: {
+            mes: mes,
+            anio: anio,
+            totalPagado: pagoMensual ? pagoMensual.total_pagado : 0,
+            totalMensual: pagoMensual ? pagoMensual.total_mensual : estudiante.mensualidad,
+            pendiente: pagoMensual 
+                ? (pagoMensual.total_mensual - pagoMensual.total_pagado) 
+                : estudiante.mensualidad,
+            estado: pagoMensual ? pagoMensual.estado : 'pendiente'
+        },
+        pagos: pagos
+    };
+}
+
+module.exports = { 
+    listarPagosPorMes, 
+    obtenerEstadisticasPorMes, 
+    registrarPago,
+    obtenerHistorialPagos 
+};

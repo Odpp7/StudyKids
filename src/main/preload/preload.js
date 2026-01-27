@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld('api', {
     listarPagosPorMes: (turno, mes, anio) => ipcRenderer.invoke('pago:listarPorMes', { turno, mes, anio }),
     registrarPago: (data) => ipcRenderer.invoke('pago:registrar', data),
     obtenerEstadisticasPagos: (turno, mes, anio) => ipcRenderer.invoke('obtener-estadisticas-pagos', turno, mes, anio),
+    obtenerHistorialPagos: (estudianteId, mes, anio) => ipcRenderer.invoke('obtener-historial-pagos', estudianteId, mes, anio),
 
     generarFactura: (estudianteId, mes, anio) => ipcRenderer.invoke('factura:generar', { estudianteId, mes, anio }),
 

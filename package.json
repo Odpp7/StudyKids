@@ -5,20 +5,25 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
+    "build": "electron-builder",
     "rebuild": "electron-rebuild -f -w better-sqlite3",
     "postinstall": "electron-rebuild -f -w better-sqlite3"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "devDependencies": {
     "electron": "^39.2.7",
+    "electron-builder": "^26.4.0",
     "electron-rebuild": "^3.2.9",
     "electron-reloader": "^1.2.3"
   },
   "dependencies": {
     "better-sqlite3": "^12.6.0",
     "pdfkit": "^0.17.2"
+  },
+  "build": {
+    "appId": "com.studykids.app",
+    "productName": "Study-Kids",
+    "win": {
+      "target": "nsis"
+    }
   }
 }
