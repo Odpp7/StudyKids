@@ -6,6 +6,7 @@ const { app } = require('electron');
 class FacturaService {
     constructor() {
         this.facturasPath = path.join(app.getPath('documents'), 'StudyKids', 'Facturas');
+        this.logoPath = path.join(__dirname, '..', '..', 'assets', 'StudyKidsLogo.png');
         this.crearCarpetaFacturas();
     }
 
@@ -68,13 +69,29 @@ class FacturaService {
                 // ==================== ENCABEZADO ====================
                 doc.rect(0, 0, 612, 100).fill(primaryColor);
 
-                doc.circle(80, 50, 30).fill('#FFFFFF');
-                doc.fontSize(20).fillColor(primaryColor).text('SK', 62, 38);
+                if (fs.existsSync(this.logoPath)) {
+                    doc.save();
+                    doc.circle(90, 50, 42).fill('#FFFFFF');
+
+                    doc.circle(90, 50, 40).clip();
+                    doc.image(this.logoPath, 50, 20, { 
+                        width: 80, 
+                        height: 80,
+                        fit: [80, 80],
+                        align: 'center',
+                        valign: 'center'
+                    });
+
+                    doc.restore();
+                } else {
+                    doc.circle(80, 50, 30).fill('#FFFFFF');
+                    doc.fontSize(20).fillColor(primaryColor).text('SK', 62, 38);
+                }
 
                 doc.fontSize(28).fillColor('#FFFFFF').font('Helvetica-Bold')
-                    .text('STUDY KIDS', 130, 35);
+                    .text('STUDY KIDS', 150, 35);
                 doc.fontSize(11).fillColor(lightGray).font('Helvetica')
-                    .text('Centro Educativo de Excelencia', 130, 65);
+                    .text('Centro Educativo de Excelencia', 150, 65);
 
                 doc.fontSize(9).fillColor('#FFFFFF')
                     .text('Comprobante de Pago', 420, 40, { align: 'right', width: 120 })

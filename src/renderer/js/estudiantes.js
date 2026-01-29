@@ -168,7 +168,6 @@ async function cargarEstadisticas(turno) {
 
         document.getElementById('stat-total').textContent = stats.total || 0;
         document.getElementById('stat-paid').textContent = stats.alDia || 0;
-        document.getElementById('stat-pending').textContent = stats.pendientes || 0;
     } catch (error) {
         console.error('Error cargando estadísticas:', error);
     }
@@ -224,7 +223,7 @@ async function cargarEstudiantes(turno) {
         <td>${est.fecha_nacimiento}</td>
         <td>${est.acudiente_nombre || 'N/A'}</td>
         <td>${est.grado}</td>
-        <td>$${est.mensualidad}</td>
+        <td>$${est.mensualidad.toLocaleString('es-CO')}</td>
         <td>
           <div class="action-buttons">
             <button class="action-btn btn-view" data-id="${est.id}">
@@ -339,6 +338,51 @@ window.closeViewModal = function () {
     modal.classList.remove('active');
     delete modal.dataset.studentId;
 };
+
+
+// ===================== CALCULAR EDAD AUTOMÁTICAMENTE =====================
+
+// Calcular edad cuando se selecciona fecha de nacimiento
+document.getElementById('student-birthdate')?.addEventListener('change', function(e) {
+    const fechaNacimiento = new Date(e.target.value);
+    const hoy = new Date();
+    
+    let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+    
+    // Ajustar si aún no ha cumplido años este año
+    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+        edad--;
+    }
+    
+    // Establecer la edad en el campo
+    document.getElementById('student-age').value = edad;
+});
+
+
+// ===================== FORMATEAR MENSUALIDAD CON PUNTOS =====================
+
+document.getElementById('student-fee')?.addEventListener('input', function(e) {
+
+    let valor = e.target.value.replace(/\./g, '');
+    
+    valor = valor.replace(/[^\d]/g, '');
+    
+    if (valor) {
+        e.target.value = Number(valor).toLocaleString('es-CO');
+    } else {
+        e.target.value = '';
+    }
+});
+
+// Al enviar el formulario, quitar los puntos para que se guarde como número
+document.getElementById('student-form')?.addEventListener('submit', function(e) {
+    const feeInput = document.getElementById('student-fee');
+    if (feeInput && feeInput.value) {
+
+        feeInput.value = feeInput.value.replace(/\./g, '');
+    }
+});
 
 
 // ===================== INICIALIZACIÓN =====================

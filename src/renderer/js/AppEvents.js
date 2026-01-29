@@ -160,11 +160,11 @@ pageContent.addEventListener('click', (e) => {
     window.api.generarFactura(Number(estudianteId), mesActual, anioActual)
       .then(resultado => {
         if (resultado.success) {
-          alert(`✅ Factura generada exitosamente\n\nArchivo: ${resultado.nombreArchivo}\n\nGuardada en: Documentos/StudyKids/Facturas/`);
+          alert(`Factura generada exitosamente\n\nArchivo: ${resultado.nombreArchivo}`);
         }
       })
       .catch(error => {
-        alert('❌ Error al generar factura: ' + error.message);
+        alert(' Error al generar factura: ' + error.message);
       });
   }
 

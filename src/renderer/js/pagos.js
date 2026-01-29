@@ -102,11 +102,9 @@ window.openHistorialModal = async function (estudianteId) {
         if (historial.resumen.pendiente > 0) {
             pendienteContainer.style.display = 'block';
             pendienteElement.textContent = `$${historial.resumen.pendiente.toLocaleString()}`;
-            pendienteElement.className = 'text-danger';
         } else {
             pendienteContainer.style.display = 'block';
             pendienteElement.textContent = '$0 - Completado';
-            pendienteElement.className = 'text-success';
         }
 
         // Llenar tabla de historial

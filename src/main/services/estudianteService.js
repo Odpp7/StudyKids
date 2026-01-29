@@ -77,13 +77,7 @@ function ObtenerEstadisticas(turno) {
       WHERE turno = ? AND activo = 1 AND estado_pago = 'al-dia'
     `).get(turno).total;
 
-    const pendientes = db.prepare(`
-      SELECT COUNT(*) as total
-      FROM estudiantes
-      WHERE turno = ? AND activo = 1 AND estado_pago = 'pendiente'
-    `).get(turno).total;
-
-    return { total: total.get(turno).total, alDia, pendientes };
+    return { total: total.get(turno).total, alDia };
 }
 
 function ObtenerEstudiantePorId(id) {

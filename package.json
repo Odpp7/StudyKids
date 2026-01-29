@@ -1,6 +1,6 @@
 {
   "name": "study-kids",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "src/main/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,13 +17,20 @@
   },
   "dependencies": {
     "better-sqlite3": "^12.6.0",
+    "electron-updater": "^6.7.3",
     "pdfkit": "^0.17.2"
   },
   "build": {
     "appId": "com.studykids.app",
     "productName": "Study-Kids",
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "src/assets/icon.ico"
     }
+  },
+  "publish": {
+    "provider": "github",
+    "owner": "Odpp7",
+    "repo": "study-kids-releases"
   }
 }
