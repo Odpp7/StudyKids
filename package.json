@@ -1,11 +1,12 @@
 {
   "name": "study-kids",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "src/main/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "build": "electron-builder",
+    "build:publish": "electron-builder --publish always",
     "rebuild": "electron-rebuild -f -w better-sqlite3",
     "postinstall": "electron-rebuild -f -w better-sqlite3"
   },
@@ -26,11 +27,13 @@
     "win": {
       "target": "nsis",
       "icon": "src/assets/icon.ico"
-    }
-  },
-  "publish": {
-    "provider": "github",
-    "owner": "Odpp7",
-    "repo": "study-kids-releases"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Odpp7",
+        "repo": "StudyKids"
+      }
+    ]
   }
 }

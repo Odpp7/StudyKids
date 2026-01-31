@@ -74,8 +74,8 @@ class FacturaService {
                     doc.circle(90, 50, 42).fill('#FFFFFF');
 
                     doc.circle(90, 50, 40).clip();
-                    doc.image(this.logoPath, 50, 20, { 
-                        width: 80, 
+                    doc.image(this.logoPath, 50, 20, {
+                        width: 80,
                         height: 80,
                         fit: [80, 80],
                         align: 'center',
@@ -93,21 +93,30 @@ class FacturaService {
                 doc.fontSize(11).fillColor(lightGray).font('Helvetica')
                     .text('Centro Educativo de Excelencia', 150, 65);
 
+                function formatearFechaCorrecta(fechaISO) {
+                    const [year, month, day] = fechaISO.split('-');
+                    return new Date(year, month - 1, day);
+                }
+
+                // CORRECCIÓN: Usar pagos[0] en lugar de pago
+                const fechaPago = formatearFechaCorrecta(pagos[0].fecha_pago);
+
                 doc.fontSize(9).fillColor('#FFFFFF')
-                    .text('Comprobante de Pago', 420, 40, { align: 'right', width: 120 })
+                    .text('Fecha de Pago', 420, 40, { align: 'right', width: 120 })
                     .fontSize(11).font('Helvetica-Bold')
-                    .text(new Date().toLocaleDateString('es-ES', { 
-                        day: '2-digit', 
-                        month: 'long', 
-                        year: 'numeric' 
-                    }), 420, 60, { align: 'right', width: 120 });
+                    .text(fechaPago.toLocaleDateString('es-ES', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric'
+                    }), 420, 60, { align: 'right', width: 120 }
+                    );
 
                 // ==================== INFORMACIÓN DEL ESTUDIANTE ====================
                 let yPos = 140;
 
                 doc.roundedRect(50, yPos, 250, 100, 5).stroke(accentColor);
                 doc.rect(50, yPos, 250, 30).fill(accentColor);
-                
+
                 doc.fontSize(11).fillColor('#FFFFFF').font('Helvetica-Bold')
                     .text('INFORMACIÓN DEL ESTUDIANTE', 60, yPos + 10);
 
@@ -131,7 +140,7 @@ class FacturaService {
 
                 // ==================== TABLA DE PAGOS ====================
                 yPos = 280;
-                
+
                 // Título de sección
                 doc.fontSize(14).fillColor(primaryColor).font('Helvetica-Bold')
                     .text('Detalle de Transacciones', 50, yPos);
@@ -153,10 +162,10 @@ class FacturaService {
                     if (index % 2 === 0) {
                         doc.rect(50, yPos - 5, 510, 22).fill('#F8F9FA');
                     }
-                    
+
                     doc.fontSize(9).fillColor('#34495E').font('Helvetica')
                         .text(pago.concepto || 'Pago mensualidad', 60, yPos, { width: 400 });
-                    
+
                     doc.font('Helvetica-Bold').fillColor(successColor)
                         .text(`$${pago.monto.toLocaleString()}`, 480, yPos, { align: 'right', width: 70 });
 
@@ -166,7 +175,7 @@ class FacturaService {
 
                 // ==================== RESUMEN FINANCIERO ====================
                 yPos += 20;
-                
+
                 doc.roundedRect(320, yPos, 240, 120, 5).lineWidth(2).stroke(accentColor);
 
                 yPos += 15;
@@ -186,7 +195,10 @@ class FacturaService {
                 yPos += 3;
 
                 yPos += 15;
-                const saldo = pagoInfo.total_mensual - pagoInfo.total_pagado;
+                // Calcular saldo: si está completado o se pagó de más, saldo = 0
+                const saldoCalculado = pagoInfo.total_mensual - pagoInfo.total_pagado;
+                const saldo = saldoCalculado > 0 ? saldoCalculado : 0;
+                
                 doc.fontSize(11).fillColor(primaryColor).font('Helvetica-Bold')
                     .text('Saldo Pendiente:', 335, yPos);
                 doc.fillColor(saldo > 0 ? warningColor : successColor).fontSize(12)
@@ -196,7 +208,7 @@ class FacturaService {
                 yPos += 35;
                 let estadoTexto = '';
                 let estadoColor = '';
-                
+
                 switch (pagoInfo.estado) {
                     case 'completado':
                         estadoTexto = 'PAGADO';

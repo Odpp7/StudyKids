@@ -276,6 +276,31 @@ window.BuscarPagosPorNombre = function (searchTerm) {
 };
 
 
+// ===================== FORMATEAR MENSUALIDAD CON PUNTOS =====================
+
+document.getElementById('payment-monto')?.addEventListener('input', function(e) {
+
+    let valor = e.target.value.replace(/\./g, '');
+    
+    valor = valor.replace(/[^\d]/g, '');
+    
+    if (valor) {
+        e.target.value = Number(valor).toLocaleString('es-CO');
+    } else {
+        e.target.value = '';
+    }
+});
+
+// Al enviar el formulario, quitar los puntos para que se guarde como número
+document.getElementById('payment-form')?.addEventListener('submit', function(e) {
+    const feeInput = document.getElementById('payment-monto');
+    if (feeInput && feeInput.value) {
+
+        feeInput.value = feeInput.value.replace(/\./g, '');
+    }
+});
+
+
 // ===================== REGISTRAR PAGO =====================
 window.registrarPago = async function (e) {
     e.preventDefault();

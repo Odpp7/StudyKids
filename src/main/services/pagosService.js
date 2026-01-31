@@ -170,7 +170,7 @@ function registrarPago(data) {
     return { ok: true, pago_id: pago.lastInsertRowid, estado: estadoMensual };
 }
 
-// ✅ NUEVA FUNCIÓN: Obtener historial de pagos de un estudiante en un mes específico
+// ✅ FUNCIÓN CORREGIDA: Calcular pendiente correctamente (nunca negativo)
 function obtenerHistorialPagos(estudianteId, mes, anio) {
     // Obtener datos del estudiante
     const estudiante = db.prepare(`
@@ -205,6 +205,15 @@ function obtenerHistorialPagos(estudianteId, mes, anio) {
         ORDER BY fecha_registro ASC
     `).all(estudianteId, mes, anio);
 
+    // Calcular pendiente: si se pagó de más o está completado, pendiente = 0
+    let pendienteCalculado = 0;
+    if (pagoMensual) {
+        const diferencia = pagoMensual.total_mensual - pagoMensual.total_pagado;
+        pendienteCalculado = diferencia > 0 ? diferencia : 0;
+    } else {
+        pendienteCalculado = estudiante.mensualidad;
+    }
+
     return {
         estudiante: {
             id: estudianteId,
@@ -216,9 +225,7 @@ function obtenerHistorialPagos(estudianteId, mes, anio) {
             anio: anio,
             totalPagado: pagoMensual ? pagoMensual.total_pagado : 0,
             totalMensual: pagoMensual ? pagoMensual.total_mensual : estudiante.mensualidad,
-            pendiente: pagoMensual 
-                ? (pagoMensual.total_mensual - pagoMensual.total_pagado) 
-                : estudiante.mensualidad,
+            pendiente: pendienteCalculado,
             estado: pagoMensual ? pagoMensual.estado : 'pendiente'
         },
         pagos: pagos
