@@ -9,6 +9,9 @@ window.openStudentModal = function () {
     form.reset();
     delete form.dataset.editingId;
 
+    // Limpiar acudientes adicionales
+    document.getElementById('acudientes-adicionales').innerHTML = '';
+
     modal.classList.add('active');
     document.getElementById('modal-title').innerHTML = '<i class="fa-solid fa-plus"></i> Nuevo Estudiante';
 };
@@ -22,6 +25,9 @@ window.closeStudentModal = function () {
 
     form.reset();
     delete form.dataset.editingId;
+
+    // Limpiar acudientes adicionales
+    document.getElementById('acudientes-adicionales').innerHTML = '';
 
     const btn = form.querySelector('button[type="submit"]');
     if (btn) btn.disabled = false;
@@ -70,6 +76,67 @@ window.openEditModal = async function (id) {
     } catch (error) {
         console.error('Error cargando estudiante:', error);
         alert('Error al cargar los datos del estudiante');
+    }
+};
+
+// ===================== ACUDIENTES ADICIONALES =====================
+
+let contadorAcudientes = 0;
+
+window.agregarAcudiente = function() {
+    contadorAcudientes++;
+    
+    const container = document.getElementById('acudientes-adicionales');
+    
+    const acudienteDiv = document.createElement('div');
+    acudienteDiv.className = 'acudiente-adicional';
+    acudienteDiv.id = `acudiente-${contadorAcudientes}`;
+    
+    acudienteDiv.innerHTML = `
+        <div class="acudiente-header">
+            <h4><i class="fa-solid fa-user"></i> Acudiente Adicional #${contadorAcudientes}</h4>
+            <button type="button" class="btn-remove-acudiente" onclick="eliminarAcudiente(${contadorAcudientes})">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>
+        <div class="form-grid">
+            <div class="form-group full-width">
+                <label>Nombre del Acudiente</label>
+                <input type="text" class="parent-name-extra" placeholder="Ej: Juan Pérez">
+            </div>
+            
+            <div class="form-group">
+                <label>Teléfono</label>
+                <input type="tel" class="parent-phone-extra" placeholder="+58 424-1234567">
+            </div>
+            
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="parent-email-extra" placeholder="ejemplo@correo.com">
+            </div>
+            
+            <div class="form-group full-width">
+                <label>Relación con el Estudiante</label>
+                <select class="parent-relation-extra">
+                    <option value="madre">Madre</option>
+                    <option value="padre">Padre</option>
+                    <option value="abuela">Abuela</option>
+                    <option value="abuelo">Abuelo</option>
+                    <option value="tia">Tía</option>
+                    <option value="tio">Tío</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+        </div>
+    `;
+    
+    container.appendChild(acudienteDiv);
+};
+
+window.eliminarAcudiente = function(id) {
+    const acudiente = document.getElementById(`acudiente-${id}`);
+    if (acudiente) {
+        acudiente.remove();
     }
 };
 
@@ -137,6 +204,7 @@ window.saveStudent = async function (e) {
             await window.api.actualizarEstudiante(Number(editingId), estudiante);
             delete e.target.dataset.editingId;
         } else {
+            // Acudiente principal
             const acudiente = {
                 nombre: document.getElementById('parent-name').value,
                 telefono: document.getElementById('parent-phone').value,
@@ -144,7 +212,32 @@ window.saveStudent = async function (e) {
                 relacion: document.getElementById('parent-relation').value
             };
 
-            await window.api.crearEstudiante({ estudiante, acudiente });
+            // Recopilar acudientes adicionales
+            const acudientesAdicionales = [];
+            const acudientesExtras = document.querySelectorAll('.acudiente-adicional');
+            
+            acudientesExtras.forEach(acudienteDiv => {
+                const nombre = acudienteDiv.querySelector('.parent-name-extra').value;
+                const telefono = acudienteDiv.querySelector('.parent-phone-extra').value;
+                const email = acudienteDiv.querySelector('.parent-email-extra').value;
+                const relacion = acudienteDiv.querySelector('.parent-relation-extra').value;
+
+                // Solo agregar si tiene al menos nombre
+                if (nombre.trim() !== '') {
+                    acudientesAdicionales.push({
+                        nombre,
+                        telefono,
+                        email: email || null,
+                        relacion
+                    });
+                }
+            });
+
+            await window.api.crearEstudiante({ 
+                estudiante, 
+                acudiente,
+                acudientesAdicionales 
+            });
         }
         
         const turnoActual = document.querySelector('.turn-btn.active').dataset.turn;
@@ -298,15 +391,77 @@ window.openViewModal = async function (id) {
             academicSection.classList.add('hidden');
         }
 
-        // Acudiente
-        document.getElementById('view-parent-name').textContent = 
-            estudiante.acudiente_nombre || 'No registrado';
-        document.getElementById('view-parent-relation').textContent = 
-            estudiante.acudiente_relacion || '-';
-        document.getElementById('view-parent-phone').textContent = 
-            estudiante.acudiente_telefono || '-';
-        document.getElementById('view-parent-email').textContent = 
-            estudiante.acudiente_email || 'No registrado';
+        // ✅ ACUDIENTES - Cargar todos los acudientes del estudiante
+        const acudientesContainer = document.getElementById('view-acudientes-container');
+        acudientesContainer.innerHTML = '';
+
+        // Obtener todos los acudientes del estudiante
+        const acudientes = await window.api.obtenerAcudientesPorEstudiante(id);
+        
+        if (acudientes && acudientes.length > 0) {
+            acudientes.forEach((acudiente, index) => {
+                const acudienteCard = document.createElement('div');
+                acudienteCard.className = 'view-acudiente-card';
+                
+                const titulo = index === 0 ? 'Principal' : `Adicional #${index}`;
+                
+                acudienteCard.innerHTML = `
+                    <div class="view-acudiente-header">
+                        <span class="view-acudiente-badge">${titulo}</span>
+                    </div>
+                    <div class="view-acudiente-info">
+                        <div class="view-info-item">
+                            <span class="view-label">Nombre:</span>
+                            <span class="view-value">${acudiente.nombre || '-'}</span>
+                        </div>
+                        <div class="view-info-item">
+                            <span class="view-label">Relación:</span>
+                            <span class="view-value">${acudiente.relacion || '-'}</span>
+                        </div>
+                        <div class="view-info-item">
+                            <span class="view-label">Teléfono:</span>
+                            <span class="view-value">${acudiente.telefono || '-'}</span>
+                        </div>
+                        <div class="view-info-item">
+                            <span class="view-label">Email:</span>
+                            <span class="view-value">${acudiente.email || 'No registrado'}</span>
+                        </div>
+                    </div>
+                `;
+                
+                acudientesContainer.appendChild(acudienteCard);
+            });
+        } else {
+            // Fallback: mostrar datos del estudiante (compatibilidad con datos antiguos)
+            const acudienteCard = document.createElement('div');
+            acudienteCard.className = 'view-acudiente-card';
+            
+            acudienteCard.innerHTML = `
+                <div class="view-acudiente-header">
+                    <span class="view-acudiente-badge">Principal</span>
+                </div>
+                <div class="view-acudiente-info">
+                    <div class="view-info-item">
+                        <span class="view-label">Nombre:</span>
+                        <span class="view-value">${estudiante.acudiente_nombre || 'No registrado'}</span>
+                    </div>
+                    <div class="view-info-item">
+                        <span class="view-label">Relación:</span>
+                        <span class="view-value">${estudiante.acudiente_relacion || '-'}</span>
+                    </div>
+                    <div class="view-info-item">
+                        <span class="view-label">Teléfono:</span>
+                        <span class="view-value">${estudiante.acudiente_telefono || '-'}</span>
+                    </div>
+                    <div class="view-info-item">
+                        <span class="view-label">Email:</span>
+                        <span class="view-value">${estudiante.acudiente_email || 'No registrado'}</span>
+                    </div>
+                </div>
+            `;
+            
+            acudientesContainer.appendChild(acudienteCard);
+        }
 
         // Información de Pago
         document.getElementById('view-fee').textContent = 
@@ -342,7 +497,6 @@ window.closeViewModal = function () {
 
 // ===================== CALCULAR EDAD AUTOMÁTICAMENTE =====================
 
-// Calcular edad cuando se selecciona fecha de nacimiento
 document.getElementById('student-birthdate')?.addEventListener('change', function(e) {
     const fechaNacimiento = new Date(e.target.value);
     const hoy = new Date();
@@ -350,12 +504,10 @@ document.getElementById('student-birthdate')?.addEventListener('change', functio
     let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
     const mes = hoy.getMonth() - fechaNacimiento.getMonth();
     
-    // Ajustar si aún no ha cumplido años este año
     if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
         edad--;
     }
     
-    // Establecer la edad en el campo
     document.getElementById('student-age').value = edad;
 });
 

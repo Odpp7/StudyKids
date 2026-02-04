@@ -26,6 +26,11 @@ pageContent.addEventListener('click', (e) => {
     closeStudentModal();
   }
 
+  // ✅ AGREGAR ACUDIENTE ADICIONAL
+  if (e.target.closest('#btn-add-acudiente')) {
+    agregarAcudiente();
+  }
+
   // Ver info detallada estudiante
   if (e.target.closest('.btn-view')) {
     const btn = e.target.closest('.btn-view');

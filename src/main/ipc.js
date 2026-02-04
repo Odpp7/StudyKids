@@ -29,6 +29,10 @@ ipcMain.handle('estudiante:eliminar', (_, id) => {
     return estudiantesService.EliminarEstudiante(id);
 });
 
+ipcMain.handle('estudiante:obtenerAcudientes', (_, estudianteId) => {
+    return estudiantesService.obtenerAcudientesPorEstudiante(estudianteId);
+});
+
 
 // ===================== PAGOS =====================
 

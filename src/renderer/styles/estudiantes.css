@@ -629,3 +629,270 @@ tbody tr:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
 }
+
+
+/* =====================================================
+   ESTILOS PARA ACUDIENTES ADICIONALES
+===================================================== */
+
+.btn-add-acudiente {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    width: fit-content;
+}
+
+.btn-add-acudiente:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-add-acudiente i {
+    font-size: 16px;
+}
+
+#acudientes-adicionales {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.acudiente-adicional {
+    background: #f7fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.acudiente-adicional:hover {
+    border-color: #cbd5e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.acudiente-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.acudiente-header h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.acudiente-header h4 i {
+    color: #667eea;
+    font-size: 18px;
+}
+
+.btn-remove-acudiente {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border: 2px solid #fc8181;
+    border-radius: 6px;
+    color: #fc8181;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-remove-acudiente:hover {
+    background: #fc8181;
+    color: white;
+    transform: scale(1.05);
+}
+
+.btn-remove-acudiente i {
+    font-size: 14px;
+}
+
+/* =====================================================
+   ESTILOS PARA ACUDIENTES ADICIONALES
+===================================================== */
+
+.btn-add-acudiente {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    width: fit-content;
+}
+
+.btn-add-acudiente:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-add-acudiente i {
+    font-size: 16px;
+}
+
+#acudientes-adicionales {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.acudiente-adicional {
+    background: #f7fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.acudiente-adicional:hover {
+    border-color: #cbd5e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.acudiente-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.acudiente-header h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.acudiente-header h4 i {
+    color: #667eea;
+    font-size: 18px;
+}
+
+.btn-remove-acudiente {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border: 2px solid #fc8181;
+    border-radius: 6px;
+    color: #fc8181;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-remove-acudiente:hover {
+    background: #fc8181;
+    color: white;
+    transform: scale(1.05);
+}
+
+.btn-remove-acudiente i {
+    font-size: 14px;
+}
+
+/* =====================================================
+   ESTILOS PARA VISTA DE ACUDIENTES
+===================================================== */
+
+#view-acudientes-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    grid-column: 1 / -1;
+}
+
+.view-acudiente-card {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px;
+    transition: all 0.2s ease;
+}
+
+.view-acudiente-card:hover {
+    border-color: #cbd5e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.view-acudiente-header {
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.view-acudiente-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.view-acudiente-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.view-acudiente-info .view-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.view-acudiente-info .view-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.view-acudiente-info .view-value {
+    font-size: 14px;
+    color: #2d3748;
+    font-weight: 500;
+}

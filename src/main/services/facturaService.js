@@ -91,7 +91,7 @@ class FacturaService {
                 doc.fontSize(28).fillColor('#FFFFFF').font('Helvetica-Bold')
                     .text('STUDY KIDS', 150, 35);
                 doc.fontSize(11).fillColor(lightGray).font('Helvetica')
-                    .text('Centro Educativo de Excelencia', 150, 65);
+                    .text('Centro de Aprendizaje Personalizado', 150, 65);
 
                 function formatearFechaCorrecta(fechaISO) {
                     const [year, month, day] = fechaISO.split('-');

@@ -24,14 +24,16 @@ function crearEstudiante(estudiante) {
     return values.lastInsertRowid;
 }
 
-function crearEstudianteConAcudiente({ estudiante, acudiente }) {
+// ✅ ACTUALIZADA - Ahora acepta acudientes adicionales
+function crearEstudianteConAcudiente({ estudiante, acudiente, acudientesAdicionales }) {
     const estudianteId = crearEstudiante(estudiante);
 
+    // Insertar acudiente principal
     const sqlAcu = db.prepare(`
-    INSERT INTO acudientes (
-      nombre, telefono, email, relacion, estudiante_id, es_principal
-    ) VALUES (?, ?, ?, ?, ?, 1)
-  `);
+        INSERT INTO acudientes (
+            nombre, telefono, email, relacion, estudiante_id, es_principal
+        ) VALUES (?, ?, ?, ?, ?, 1)
+    `);
 
     sqlAcu.run(
         acudiente.nombre,
@@ -40,6 +42,25 @@ function crearEstudianteConAcudiente({ estudiante, acudiente }) {
         acudiente.relacion,
         estudianteId
     );
+
+    // ✅ Insertar acudientes adicionales si existen
+    if (acudientesAdicionales && Array.isArray(acudientesAdicionales) && acudientesAdicionales.length > 0) {
+        const sqlAcuAdicional = db.prepare(`
+            INSERT INTO acudientes (
+                nombre, telefono, email, relacion, estudiante_id, es_principal
+            ) VALUES (?, ?, ?, ?, ?, 0)
+        `);
+
+        acudientesAdicionales.forEach(acuAdicional => {
+            sqlAcuAdicional.run(
+                acuAdicional.nombre,
+                acuAdicional.telefono,
+                acuAdicional.email || null,
+                acuAdicional.relacion,
+                estudianteId
+            );
+        });
+    }
 
     return { ok: true };
 }
@@ -99,6 +120,23 @@ function ObtenerEstudiantePorId(id) {
     return sql.get(id);
 }
 
+function obtenerAcudientesPorEstudiante(estudianteId) {
+    const sql = db.prepare(`
+        SELECT 
+            id,
+            nombre,
+            telefono,
+            email,
+            relacion,
+            es_principal
+        FROM acudientes
+        WHERE estudiante_id = ?
+        ORDER BY es_principal DESC, id ASC
+    `);
+
+    return sql.all(estudianteId);
+}
+
 
 function ActualizarEstudiante(id, estudiante) {
     const sql = db.prepare(`
@@ -134,6 +172,7 @@ function ActualizarEstudiante(id, estudiante) {
 
     return { ok: true };
 }
+
 function EliminarEstudiante(id) {
     const sql = db.prepare(`UPDATE estudiantes SET activo = 0 WHERE id = ?`);
     sql.run(id);
@@ -147,5 +186,6 @@ module.exports = {
     ObtenerEstudiantePorId,
     ObtenerEstadisticas,
     ActualizarEstudiante, 
-    EliminarEstudiante 
+    EliminarEstudiante,
+    obtenerAcudientesPorEstudiante 
 };

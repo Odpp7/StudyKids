@@ -8,6 +8,7 @@ contextBridge.exposeInMainWorld('api', {
     obtenerEstudiantePorId: (id) => ipcRenderer.invoke('estudiante:obtenerPorId', id),
     actualizarEstudiante: (id, estudiante) => ipcRenderer.invoke('estudiante:actualizar', {id, estudiante}),
     eliminarEstudiante: (id) => ipcRenderer.invoke('estudiante:eliminar', id),
+    obtenerAcudientesPorEstudiante: (estudianteId) => ipcRenderer.invoke('estudiante:obtenerAcudientes', estudianteId),
 
     listarEstudiantesParaPagos: (turno) => ipcRenderer.invoke('pago:listar', turno),
     listarPagosPorMes: (turno, mes, anio) => ipcRenderer.invoke('pago:listarPorMes', { turno, mes, anio }),

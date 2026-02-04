@@ -191,7 +191,9 @@
       <!-- Información del Acudiente -->
       <div class="form-section">
         <h3><i class="fa-solid fa-people-group"></i> Información del Acudiente</h3>
-        <div class="form-grid">
+        
+        <!-- Acudiente Principal -->
+        <div class="form-grid" id="acudiente-principal">
           <div class="form-group full-width">
             <label>Nombre del Acudiente *</label>
             <input type="text" id="parent-name" placeholder="Ej: Carmen González" required>
@@ -220,6 +222,15 @@
             </select>
           </div>
         </div>
+
+        <!-- Contenedor para acudientes adicionales -->
+        <div id="acudientes-adicionales"></div>
+
+        <!-- Botón agregar acudiente -->
+        <button type="button" class="btn-add-acudiente" id="btn-add-acudiente">
+          <i class="fa-solid fa-user-plus"></i>
+          Agregar otro acudiente
+        </button>
       </div>
 
       <!-- Información de Mensualidad -->
@@ -322,23 +333,10 @@
         </div>
 
         <!-- Información del Acudiente -->
-        <div class="view-info-section">
-          <h4><i class="fa-solid fa-people-group"></i> Acudiente Principal</h4>
-          <div class="view-info-item">
-            <span class="view-label">Nombre:</span>
-            <span class="view-value" id="view-parent-name">-</span>
-          </div>
-          <div class="view-info-item">
-            <span class="view-label">Relación:</span>
-            <span class="view-value" id="view-parent-relation">-</span>
-          </div>
-          <div class="view-info-item">
-            <span class="view-label">Teléfono:</span>
-            <span class="view-value" id="view-parent-phone">-</span>
-          </div>
-          <div class="view-info-item">
-            <span class="view-label">Email:</span>
-            <span class="view-value" id="view-parent-email">-</span>
+        <div class="view-info-section full-width">
+          <h4><i class="fa-solid fa-people-group"></i> Acudientes</h4>
+          <div id="view-acudientes-container">
+            <!-- Los acudientes se cargarán aquí dinámicamente -->
           </div>
         </div>
 
