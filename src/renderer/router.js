@@ -3,15 +3,21 @@ function cargarPagina(nombre) {
     .then(html => {
       document.getElementById('page-content').innerHTML = html;
       
+      // ✅ Remover script anterior completamente
       const oldScript = document.getElementById('page-script');
-      if (oldScript) oldScript.remove();
+      if (oldScript) {
+        oldScript.remove();
+      }
 
-      const script = document.createElement('script');
-      script.src = `js/${nombre}.js`;
-      script.id = 'page-script';
-      script.defer = true;
-
-      document.body.appendChild(script);
+      // ✅ Pequeño delay para asegurar limpieza
+      setTimeout(() => {
+        const script = document.createElement('script');
+        script.src = `js/${nombre}.js?t=${Date.now()}`; // ✅ Cache busting
+        script.id = 'page-script';
+        script.type = 'module'; // ✅ Importante: usar módulos
+        
+        document.body.appendChild(script);
+      }, 50);
     });
 }
 
